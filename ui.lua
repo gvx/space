@@ -70,6 +70,22 @@ function ui.update(dt)
 	end
 end
 
+function love.mousepressed(x,y,button) --oh god this can't be right
+	if state.current == 'game' then	   --a love callback implemented for occasional use?
+		if button == 'wu' then
+			graphics.zoom = graphics.zoom/1.03
+		elseif button == 'wd' then
+			graphics.zoom = graphics.zoom*1.03
+		end
+	elseif state.current == 'base_buyship' then
+		if button == 'wu' then
+			base.buyship.scrolly = math.max(math.min(base.buyship.scrolly - 4, base.buyship.maxscrolly),0)
+		elseif button == 'wd' then
+			base.buyship.scrolly = math.max(math.min(base.buyship.scrolly + 4, base.buyship.maxscrolly),0)
+		end
+	end
+end
+
 function ui.draw()
 	if ui.show then
 		love.graphics.setColor(255,255,255,255)
