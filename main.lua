@@ -67,6 +67,9 @@ function love.update(dt)
 	elseif state.current:sub(1,4) == 'base' then
 		base.update(dt)
 		love.timer.sleep(20)
+	elseif state.current:sub(1,8) == 'mainmenu' then
+		mainmenu[state.current:sub(10)].update(dt)
+		love.timer.sleep(20)
 	end
 end
 
@@ -84,10 +87,12 @@ function love.draw()
 		love.graphics.print('Press R to restart the game.', 100, 120)
 	elseif state.current == 'base' then
 		ui.drawbase()
-	elseif state.current:sub(1,4) == 'base' then
-		base.draw()
 	elseif state.current == 'mainmenu' then
 		mainmenu.draw()
+	elseif state.current:sub(1,4) == 'base' then
+		base.draw()
+	elseif state.current:sub(1,8) == 'mainmenu' then
+		mainmenu[state.current:sub(10)].draw()
 	end
 end
 

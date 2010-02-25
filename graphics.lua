@@ -173,7 +173,7 @@ end
 
 function graphics.update(dt)
 	if true then
-		if state.shaking then
+		if state.shaking and not settings.noshaking then
 			local s = state.shaking
 			graphics.viewx = player.x + math.random(s) - s*.5
 			graphics.viewy = player.y + math.random(s) - s*.5

@@ -15,12 +15,27 @@ registerstate'base'
 function ui.load()
 end
 
+local function zoomout(n)
+	graphics.zoom = graphics.zoom/(1 + .01*n)
+end
+local function zoomin(n)
+	graphics.zoom = graphics.zoom*(1 + .01*n)
+end
+
 function ui.update(dt)
 	local D = love.keyboard.isDown
 	if D'pageup' then
-		graphics.zoom = graphics.zoom/1.01
+		if settings.revzoom then
+			zoomout(1)
+		else
+			zoomin(1)
+		end
 	elseif D'pagedown' then
-		graphics.zoom = graphics.zoom*1.01
+		if settings.revzoom then
+			zoomin(1)
+		else
+			zoomout(1)
+		end
 	end
 	local x = love.mouse.getX()
 	if x > 750-20 and x < 800-20 then
@@ -73,9 +88,17 @@ end
 function love.mousepressed(x,y,button) --oh god this can't be right
 	if state.current == 'game' then	   --a love callback implemented for occasional use?
 		if button == 'wu' then
-			graphics.zoom = graphics.zoom/1.03
+			if settings.revzoom then
+				zoomout(3)
+			else
+				zoomin(3)
+			end
 		elseif button == 'wd' then
-			graphics.zoom = graphics.zoom*1.03
+			if settings.revzoom then
+				zoomin(3)
+			else
+				zoomout(3)
+			end
 		end
 	elseif state.current == 'base_buyship' then
 		if button == 'wu' then

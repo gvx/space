@@ -13,19 +13,41 @@ mainmenu = {
 			state.current = 'game'
 		end,
 		function ()
-			love.graphics.setFont(smallfont)
-			state.current = 'game'
+			love.graphics.setFont(largefont)
+			state.current = 'mainmenu_settings'
 		end,
 		function ()
-			love.graphics.setFont(smallfont)
-			state.current = 'game'
+			love.graphics.setFont(largefont)
+			mainmenu.credits.totaltime = 0
+			state.current = 'mainmenu_credits'
 		end,
 		function ()
 			love.event.push'q'
 		end
-		}
+		},
+	settings = {
+		timeout = 0,
+		selitem = 1,
+		items = {
+			{name='Reverse zoom keys', hint='Make scrolling up zoom out', type='bool', value='revzoom'},
+			{name='Disable shaking', hint='Do not shake the camera when close to a black hole', type='bool', value='noshaking'},
+			{name='Back to main menu', hint='Return to the main menu, all changes are applied', type='return'},
+			},
+		},
+	credits = {
+		totaltime = 0,
+		items = {
+			{'gvx', 'Robin Wellner', 'Project lead, code'},
+			{'CyaNox', 'Mark Sanders', 'Spaceship design and artwork'},
+			{'Thanks', 'to the LOVE CLUB', 'for the feedback and support'},
+			{'', '', ''},
+			}
+		},
 	}
+settings = {}
 registerstate 'mainmenu'
+registerstate 'mainmenu_settings'
+registerstate 'mainmenu_credits'
 
 function mainmenu.load()
 end
@@ -76,6 +98,53 @@ function mainmenu.draw()
 	end
 end
 
+function mainmenu.settings.update(dt)
+	mainmenu.settings.timeout = mainmenu.settings.timeout + dt
+end
+function mainmenu.settings.draw()
+	for i, setting in ipairs(mainmenu.settings.items) do
+		if i == mainmenu.settings.selitem then
+			love.graphics.setColor(100,100,100)
+			love.graphics.roundrect('fill', 15, i*30-15, 750, 30, 10, 10)
+			love.graphics.roundrect('line', 15, i*30-15, 750, 30, 10, 10)
+			if mainmenu.settings.timeout > .5 then
+				love.graphics.setFont(smallfont)
+				love.graphics.setColor(255,255,255, math.min((mainmenu.settings.timeout-.5)*255, 255))
+				love.graphics.print(setting.hint, 740 - smallfont:getWidth(setting.hint), i*30+5)
+				love.graphics.setFont(largefont)
+			end
+		end
+		love.graphics.setColor(255,255,255)
+		love.graphics.print(setting.name, 50, i*30+10)
+		if setting.type == 'bool' then
+			love.graphics.setLineWidth(2)
+			love.graphics.rectangle('line', 25, i*30-10, 20, 20)
+			if settings[setting.value] then
+				love.graphics.rectangle('fill', 25, i*30-10, 20, 20)
+			end
+		end
+	end
+end
+
+function mainmenu.credits.update(dt)
+	mainmenu.credits.totaltime = mainmenu.credits.totaltime + dt
+	if mainmenu.credits.totaltime > #mainmenu.credits.items * 2 then
+		states.mainmenu_credits.keypressed.escape()
+	end
+end
+function mainmenu.credits.draw()
+	local t = mainmenu.credits.totaltime
+	local i = math.floor(t/2)+1
+	local name = mainmenu.credits.items[i]
+	if name then
+		local a = 255 - (t%2-1)^2*255
+		love.graphics.setColor(255,255,255, a)
+		love.graphics.print(name[1], 10 + (i * 74) % 95, 50 + i)
+		love.graphics.print(name[2], 130 + (i * 185) % 115, 90 + i)
+		love.graphics.print(name[3], 70 + (i * 18) % 39, 120 + i)
+	end
+end
+
 function states.mainmenu.keypressed.down()
 	if mainmenu.selitem < #mainmenu.items then
 		mainmenu.selitem = mainmenu.selitem + 1
@@ -90,4 +159,30 @@ end
 
 states.mainmenu.keypressed['return'] = function()
 	mainmenu.actions[mainmenu.selitem]()
+end
+
+function states.mainmenu_settings.keypressed.escape()
+	love.graphics.setFont(largefont)
+	state.current = 'mainmenu'
+end
+states.mainmenu_credits.keypressed.escape = states.mainmenu_settings.keypressed.escape
+
+function states.mainmenu_settings.keypressed.up()
+	mainmenu.settings.selitem = (mainmenu.settings.selitem - 2) % #mainmenu.settings.items + 1
+	mainmenu.settings.timeout = 0
+end
+
+function states.mainmenu_settings.keypressed.down()
+	mainmenu.settings.selitem = mainmenu.settings.selitem % #mainmenu.settings.items + 1
+	mainmenu.settings.timeout = 0
+end
+
+states.mainmenu_settings.keypressed['return'] = function()
+	local s = mainmenu.settings.items[mainmenu.settings.selitem]
+	if s.type == 'return' then
+		states.mainmenu_settings.keypressed.escape()
+	elseif s.type == 'bool' then
+		settings[s.value] = not settings[s.value]
+	else
+	end
 end
