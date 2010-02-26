@@ -41,7 +41,7 @@ function base.draw()
 			love.graphics.setColor(255,255,255)
 			love.graphics.setLineWidth(3)
 			love.graphics.roundrect('line', 20, 20 + i * 150 - 150 - dispos, 700, 120, 20, 20)
-			graphics.drawshape(graphics.vector[ship], 80, 20 + i * 150 - 150 + 60 - dispos, math.min(ships[ship].size, 15), 0)
+			graphics.drawshape(graphics.vector[ships[ship].vector], 80, 20 + i * 150 - 150 + 60 - dispos, math.min(ships[ship].size, 15), 0)
 			love.graphics.printf(ships[ship].description, 140, 20 + i * 150 - 150 + 20 - dispos, 700 - 120 - 20)
 		end
 		love.graphics.setColor(70,70,70)

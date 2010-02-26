@@ -91,7 +91,7 @@ function player.update(dt)
 	end
 end
 
-local nextship = {beginner = 'cyanoxscout', cyanoxscout = 'cyanoxfighter', cyanoxfighter = 'cyanoxspeeder', cyanoxspeeder = 'cyanoxbomber', cyanoxbomber = 'cyanoxscout', vessel = 'fighter', fighter='bomber', bomber='speeder', speeder = 'betterspeeder', betterspeeder = 'superspeeder', superspeeder = 'beginner'}
+local nextship = {beginner = 'vessel', vessel = 'fighter', fighter='bomber', bomber='speeder', speeder = 'betterspeeder', betterspeeder = 'superspeeder', superspeeder = 'beginner'}
 function states.game.keypressed.tab()
 	player.ship = nextship[player.ship]
 end
