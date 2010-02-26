@@ -29,8 +29,9 @@ function ships.load()
 	ships.superbomber.description = 'Super bomber\n\nVery large, very slow, but near undefeatable.'
 	ships.superspeeder.description = 'Super speeder\n\nVery fast, agile and quite nimble. Useful to lose anyone tailing you -- or outmaneuvering black holes too close for comfort.'
 	
-	table.insert(map.objects, {type = 'ship', x = 0, y = 300, dx = 80, dy = 0, angle = 0, ship= 'fighter',fleet={}, targetx=800, targety=-400, nexttarget = function (self) return map.objects.blackhole.x, map.objects.blackhole.y end})
-	table.insert(map.objects, {type = 'ship', x = -200, y = 300, dx = 100, dy = 0, angle = 0, ship= 'bomber', following = map.objects[#map.objects]})
+	local s2p = sectortopixels
+	table.insert(map.objects, {type = 'ship', x = s2p(-200), y = s2p(-200)+300, dx = 80, dy = 0, angle = 0, ship= 'fighter',fleet={}, targetx=s2p(-200)+800, targety=s2p(-200)-400, nexttarget = function (self) return map.objects.blackhole.x, map.objects.blackhole.y end})
+	table.insert(map.objects, {type = 'ship', x = s2p(-200)-200, y = s2p(-200)+300, dx = 100, dy = 0, angle = 0, ship= 'bomber', following = map.objects[#map.objects]})
 	
 	for k,v in pairs(ships) do
 		if type(v) == 'table' and v.hull then
