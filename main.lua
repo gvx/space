@@ -21,9 +21,11 @@ function love.load()
 	require "physics"
 	require "mainmenu"
 	require "base"
+	require "mission"
 	
 	smallfont = love.graphics.newFont('gemfontone.ttf', 16)
 	largefont = love.graphics.newFont('gemfontone.ttf', 30)
+	mediumfont = love.graphics.newFont('gemfontone.ttf', 22)
 	love.graphics.setFont(largefont)
 	
 	restart()
@@ -39,6 +41,7 @@ function restart()
 	physics.load()
 	mainmenu.load()
 	base.load()
+	mission.load()
 end
 
 function love.update(dt)
@@ -53,6 +56,7 @@ function love.update(dt)
 		ships.update(dt)
 		physics.update(dt)
 		graphics.update(dt)
+		mission.update(dt)
 		love.timer.sleep(10)
 	elseif state.current == 'paused' then
 		love.timer.sleep(20)
@@ -63,6 +67,9 @@ function love.update(dt)
 		love.timer.sleep(20)
 	elseif state.current == 'base' then
 		ui.base.update(dt)
+		love.timer.sleep(20)
+	elseif state.current == 'mission' then
+		mission.missionupdate(dt)
 		love.timer.sleep(20)
 	elseif state.current:sub(1,4) == 'base' then
 		base.update(dt)
@@ -89,6 +96,8 @@ function love.draw()
 		ui.drawbase()
 	elseif state.current == 'mainmenu' then
 		mainmenu.draw()
+	elseif state.current == 'mission' then
+		mission.missiondraw()
 	elseif state.current:sub(1,4) == 'base' then
 		base.draw()
 	elseif state.current:sub(1,8) == 'mainmenu' then

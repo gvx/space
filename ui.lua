@@ -111,9 +111,14 @@ end
 
 function ui.draw()
 	if ui.show then
+		love.graphics.setColor(0,0,0,50)
+		love.graphics.rectangle('fill', 36, 24, 300, 84-20)
 		love.graphics.setColor(255,255,255,255)
 		love.graphics.print(("Speed: %02d km/s"):format(math.sqrt(player.dx^2 + player.dy^2)/5), 40, 40)
 		love.graphics.print("Rank: "..ranks[player.rank], 40, 60)
+		if mission.mission then
+			love.graphics.print("Mission: "..mission.mission.name, 40, 80)
+		end
 		graphics.drawshape(graphics.vector.arrow, 750, 40, 15, -player.angle)
 		love.graphics.setColor(255,255,255,20)
 		love.graphics.rectangle('fill', 754-20, 454-20, 43, 143)
