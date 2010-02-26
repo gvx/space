@@ -1,4 +1,4 @@
-vector = require "colon" --change this line for other previews
+vector = require "light_bomber" --change this line for other previews
 local vlen = #vector
 local llen = 0
 for i=1,vlen do
@@ -54,5 +54,9 @@ function love.draw()
 	love.graphics.circle('line', 0, 0, 290, 60)
 	love.graphics.setColor(255, 255, 255)
 	drawshape(vector, 0 , 0, 290, totaltime*.5)
+	if vector.collision then
+		love.graphics.setColor(0, 0, 255)
+		love.graphics.polygon('line', unpack(vector.collision))
+	end
 	love.graphics.pop()
 end
