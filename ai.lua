@@ -5,10 +5,38 @@ end
 
 function ai.approach(ship, targetx, targety, dt)
 	local d = math.sqrt((ship.x-targetx)^2 + (ship.y-targety)^2)
-	local dirangle = math.atan2(targety-ship.y-ship.dy, targetx+ship.x-ship.dx)
-	local a = (object.angle-dirangle)%(2*math.pi)
+	local dirangle = math.atan2(targety-ship.y-ship.dy, targetx-ship.x-ship.dx)
+	local a = (ship.angle-dirangle)%(2*math.pi)
+	print(math.floor(a/math.pi*180), dirangle/math.pi*180)
 	local rot = ships[ship.ship].rot*dt
 	local v = math.sqrt(ship.dx^2 + ship.dy^2)
+	local time_needed_to_stop = v / ships[ship.ship].acc
+	local braking_distance = .5 * v^2 / ships[ship.ship].acc
+	local time_to_rotate = math.abs(math.pi - a) / ships[ship.ship].rot
+	local maxspeed = 800
+	if d <= braking_distance + time_to_rotate * v then
+		--slow down
+		if a > math.pi+.2 then
+			ship.angle = ship.angle - rot
+		elseif a < math.pi-.2 then
+			ship.angle = ship.angle + rot 
+		else
+			local acc = ships[ship.ship].acc*dt
+			ship.dx = ship.dx + acc*math.cos(ship.angle)
+			ship.dy = ship.dy + acc*math.sin(ship.angle)
+		end
+	elseif v < maxspeed then
+		--speed up
+		if a > math.pi and a < 2*math.pi-.2 then
+			ship.angle = ship.angle + rot
+		elseif a < math.pi and a > .2 then
+			ship.angle = ship.angle - rot 
+		else
+			local acc = ships[ship.ship].acc*dt
+			ship.dx = ship.dx + acc*math.cos(ship.angle)
+			ship.dy = ship.dy + acc*math.sin(ship.angle)
+		end
+	end
 end
 
 function ai.update(dt)
