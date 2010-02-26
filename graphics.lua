@@ -88,6 +88,9 @@ end
 
 function graphics.drawlines(lines)
 	love.graphics.setLineWidth(lines.width)
+	if lines.color then
+		love.graphics.setColor(unpack(lines.color))
+	end
 	if lines.closed then
 		if lines.fill then
 			love.graphics.polygon('fill', unpack(lines))
@@ -95,6 +98,9 @@ function graphics.drawlines(lines)
 		love.graphics.polygon('line', unpack(lines))
 	else
 		love.graphics.line(unpack(lines))
+	end
+	if lines.color then
+		love.graphics.setColor(255,255,255)
 	end
 end
 
