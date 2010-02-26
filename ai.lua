@@ -3,6 +3,14 @@ ai = {}
 function ai.load()
 end
 
+function ai.approach(ship, targetx, targety, dt)
+	local d = math.sqrt((ship.x-targetx)^2 + (ship.y-targety)^2)
+	local dirangle = math.atan2(targety-ship.y-ship.dy, targetx+ship.x-ship.dx)
+	local a = (object.angle-dirangle)%(2*math.pi)
+	local rot = ships[ship.ship].rot*dt
+	local v = math.sqrt(ship.dx^2 + ship.dy^2)
+end
+
 function ai.update(dt)
 	for i, object in pairs(map.objects) do
 		if object.type == 'ship' then
