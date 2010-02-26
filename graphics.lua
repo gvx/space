@@ -88,7 +88,9 @@ end
 
 function graphics.drawlines(lines)
 	love.graphics.setLineWidth(lines.width)
+	local clr
 	if lines.color then
+		clr = love.graphics.getColor()
 		love.graphics.setColor(unpack(lines.color))
 	end
 	if lines.closed then
@@ -100,7 +102,7 @@ function graphics.drawlines(lines)
 		love.graphics.line(unpack(lines))
 	end
 	if lines.color then
-		love.graphics.setColor(255,255,255)
+		love.graphics.setColor(unpack(clr))
 	end
 end
 
