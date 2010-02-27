@@ -4,6 +4,8 @@ math.randomseed(os.time())
 state = {frame = 0, totaltime = 0, current = 'mainmenu'}
 states = {}
 
+officialnames = {spacecorp = 'SpaceCorp', }
+
 function registerstate(name)
 	states[name] = {}
 	states[name].keypressed = {}
@@ -98,6 +100,8 @@ function love.draw()
 		mainmenu.draw()
 	elseif state.current == 'mission' then
 		mission.missiondraw()
+	elseif state.current == 'mission_debrief' then
+		mission.mission_debriefdraw()
 	elseif state.current:sub(1,4) == 'base' then
 		base.draw()
 	elseif state.current:sub(1,8) == 'mainmenu' then
