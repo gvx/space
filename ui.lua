@@ -186,9 +186,7 @@ function ui.base.update(dt)
 		ui.base.usedmouse = true
 		if love.mouse.isDown'l' then
 			--change state
-			if ui.base.selected then
-				state.current = 'base_'.. ui.base.states[ui.base.selected]
-			end
+			states.base.keypressed["return"]()
 		end
 	end
 	for i=1,#ui.base.rot do
@@ -237,6 +235,9 @@ end
 states.base.keypressed["return"] = function()
 	if ui.base.selected then
 		state.current = 'base_'.. ui.base.states[ui.base.selected]
+		if base[ui.base.states[ui.base.selected]].init then
+			base[ui.base.states[ui.base.selected]].init()
+		end
 	end
 end
 

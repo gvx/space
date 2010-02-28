@@ -10,23 +10,6 @@ end
 
 function base.update(dt)
 	if state.current == 'base_mission' then
-		if not base.mission.list then
-			--generate mission list
-			base.mission.list = {}
-			for k,v in pairs(mission.list) do
-				if not v.completed and v.available() then
-					v.randomid = math.random() --used for sorting
-					table.insert(base.mission.list, v)
-				end
-			end
-			if #base.mission.list > 10 then
-				table.sort(base.mission.list, function(a,b) return a.randomid < b.randomid end)
-				for i=#base.mission.list,11,-1 do
-					base.mission.list[i] = nil
-				end
-			end
-			
-		end
 	elseif state.current == 'base_buyship' then
 		local x, y = love.mouse.getPosition()
 		if love.mouse.isDown'l' then
@@ -46,16 +29,14 @@ end
 
 function base.draw()
 	if state.current == 'base_mission' then
-		if base.mission.list then
-			for i,ms in ipairs(base.mission.list) do
-				love.graphics.setColor(25,25,25)
-				love.graphics.roundrect('fill', 20, 20 + i * 150 - 150, 700, 120, 20, 20)
-				love.graphics.setColor(255,255,255)
-				love.graphics.setLineWidth(3)
-				love.graphics.roundrect('line', 20, 20 + i * 150 - 150, 700, 120, 20, 20)
-				love.graphics.print(officialnames[ms.commissionedby], 140, 20 + i * 150 - 150 + 20)
-				love.graphics.printf(ms.name, 140, 40 + i * 150 - 150 + 20, 700 - 120 - 20)
-			end
+		for i,ms in ipairs(base.mission.list) do
+			love.graphics.setColor(25,25,25)
+			love.graphics.roundrect('fill', 20, 20 + i * 150 - 150, 700, 120, 20, 20)
+			love.graphics.setColor(255,255,255)
+			love.graphics.setLineWidth(3)
+			love.graphics.roundrect('line', 20, 20 + i * 150 - 150, 700, 120, 20, 20)
+			love.graphics.print(officialnames[ms.commissionedby], 140, 20 + i * 150 - 150 + 20)
+			love.graphics.printf(ms.name, 140, 40 + i * 150 - 150 + 20, 700 - 120 - 20)
 		end
 	elseif state.current == 'base_trade' then
 		love.graphics.print('There is nothing to trade at the moment. Come back later.', 20, 20)
@@ -86,14 +67,28 @@ function base.draw()
 	end
 end
 
+function base.mission.init()
+	base.mission.list = {}
+	for k,v in pairs(mission.list) do
+		if not v.completed and v.available() then
+			v.randomid = math.random() --used for sorting
+			table.insert(base.mission.list, v)
+		end
+	end
+	if #base.mission.list > 10 then
+		table.sort(base.mission.list, function(a,b) return a.randomid < b.randomid end)
+		for i=#base.mission.list,11,-1 do
+			base.mission.list[i] = nil
+		end
+	end
+end
+
 function states.base_mission.keypressed.escape()
-	base.mission.list = nil
 	state.current = 'base'
 end
 states.base_mission.keypressed['return'] = function()
 	if not mission.mission or mission.mission.canrefuse then
 		mission.newmission = base.mission.list[1]
-		base.mission.list = nil
 		love.graphics.setFont(mediumfont)
 		state.current = 'mission'
 	end
