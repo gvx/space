@@ -93,6 +93,7 @@ end
 states.base_mission.keypressed['return'] = function()
 	if not mission.mission or mission.mission.canrefuse then
 		mission.newmission = base.mission.list[1]
+		base.mission.list = nil
 		love.graphics.setFont(mediumfont)
 		state.current = 'mission'
 	end
