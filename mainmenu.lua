@@ -6,23 +6,34 @@ mainmenu = {
 	actions = {
 		function ()
 			love.graphics.setFont(smallfont)
-			state.current = 'game'
+			mainmenu.transition.timeout = .5
+			mainmenu.transition.target = 'game'
+			state.current = 'mainmenu_transition'
 		end,
 		function ()
 			love.graphics.setFont(smallfont)
-			state.current = 'game'
+			mainmenu.transition.timeout = .5
+			mainmenu.transition.target = 'game'
+			state.current = 'mainmenu_transition'
 		end,
 		function ()
 			love.graphics.setFont(largefont)
-			state.current = 'mainmenu_settings'
+			mainmenu.transition.timeout = .5
+			mainmenu.transition.target = 'mainmenu_settings'
+			state.current = 'mainmenu_transition'
 		end,
 		function ()
 			love.graphics.setFont(largefont)
 			mainmenu.credits.totaltime = 0
-			state.current = 'mainmenu_credits'
+			mainmenu.transition.timeout = .5
+			mainmenu.transition.target = 'mainmenu_credits'
+			state.current = 'mainmenu_transition'
 		end,
 		function ()
-			love.event.push'q'
+			mainmenu.credits.totaltime = 0
+			mainmenu.transition.timeout = .5
+			mainmenu.transition.target = 'mainmenu_quitting'
+			state.current = 'mainmenu_transition'
 		end
 		},
 	settings = {
@@ -43,11 +54,18 @@ mainmenu = {
 			{'', '', ''},
 			}
 		},
+	transition = {
+		timeout = 0,
+		},
+	quitting = {},
 	}
 settings = {}
 registerstate 'mainmenu'
+registerstate 'mainmenu_transition'
 registerstate 'mainmenu_settings'
 registerstate 'mainmenu_credits'
+registerstate 'mainmenu_quitting'
+
 
 function mainmenu.load()
 end
@@ -79,8 +97,9 @@ function mainmenu.update(dt)
 	end
 end
 
-function mainmenu.draw()
-	love.graphics.setColor(255,255,255)
+function mainmenu.draw(a)
+	a = a or 255
+	love.graphics.setColor(255,255,255, a)
 	local sh = math.sqrt(math.abs(mainmenu.seldy))*.3
 	local shx = sh > 2 and math.random(sh)-.5*sh or 0
 	local shy = sh > 2 and math.random(sh)-.5*sh or 0
@@ -90,9 +109,9 @@ function mainmenu.draw()
 		local m = math.abs(i - mainmenu.sely / 40)*10
 		local M = i==I and 0 or (100+ math.sqrt(math.abs(i-I))*50)
 		if math.floor((love.mouse.getY()  - 300 + 30 + mainmenu.sely)/40) == i then
-			love.graphics.setColor(i==I and 20 or (255-M),255,255)
+			love.graphics.setColor(i==I and 20 or (255-M),255,255, a)
 		else
-			love.graphics.setColor(255-M,255-M,255-M)
+			love.graphics.setColor(255-M,255-M,255-M, a)
 		end
 		love.graphics.print(mainmenu.items[i], 300 - m, 300 + i * 40 - mainmenu.sely)
 	end
@@ -125,6 +144,29 @@ function mainmenu.settings.draw()
 		end
 	end
 end
+
+function mainmenu.transition.update(dt)
+	mainmenu.transition.timeout = mainmenu.transition.timeout - dt
+	if mainmenu.transition.timeout <= 0 then
+		state.current = mainmenu.transition.target
+	end
+end
+function mainmenu.transition.draw()
+	local t = mainmenu.transition.timeout
+	love.graphics.push()
+	local y = 300 + mainmenu.selitem * 40 - mainmenu.sely
+	love.graphics.translate(300, y)
+	love.graphics.scale(.5/t,.5/t)--mainmenu.transition.timeout*2, 1)
+	love.graphics.translate(-300, -y)
+	mainmenu.draw(510*t)
+	love.graphics.pop()
+end
+function mainmenu.quitting.update(dt)
+	love.event.push'q'
+end
+function mainmenu.quitting.draw()
+end
+
 
 function mainmenu.credits.update(dt)
 	mainmenu.credits.totaltime = mainmenu.credits.totaltime + dt
