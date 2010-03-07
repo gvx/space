@@ -15,10 +15,8 @@ function ai.approach(ship, targetx, targety, dt)
 	local braking_distance = .5 * v^2 / ships[ship.ship].acc
 	local time_to_rotate = math.abs(math.pi - a2) / ships[ship.ship].rot
 	local maxspeed = 800
-	print (d, a, a2)
 	if d <= braking_distance + time_to_rotate * v then
 		--slow down
-		print'down'
 		if a2 > math.pi+.2 then
 			ship.angle = ship.angle - rot
 		elseif a2 < math.pi-.2 then
@@ -30,7 +28,6 @@ function ai.approach(ship, targetx, targety, dt)
 		end
 	elseif v < maxspeed then
 		--speed up
-		print'up'
 		if a > math.pi and a < 2*math.pi-.2 then
 			ship.angle = ship.angle + rot
 		elseif a < math.pi and a > .2 then
