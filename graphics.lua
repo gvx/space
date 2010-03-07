@@ -121,6 +121,7 @@ end
 
 local w, h = love.graphics.getWidth()/2, love.graphics.getHeight()/2
 function graphics.draw()
+	local n = 70 * math.sqrt(graphics.zoom)
 	love.graphics.print(love.timer.getFPS(), 20, 10)
 	love.graphics.push()
 	love.graphics.translate(w, h)
@@ -132,7 +133,6 @@ function graphics.draw()
 		if object.x >= graphics.viewx - rx and object.x <= graphics.viewx + rx and object.y >= graphics.viewy - ry and object.y <= graphics.viewy + ry then
 			if object.type == 'base' or object.type == 'planet' then
 				love.graphics.setLineWidth(1.5)
-				local n = 50 * math.sqrt(graphics.zoom)
 				love.graphics.circle('fill', object.x, object.y, object.radius, n)
 				love.graphics.circle('line', object.x, object.y, object.radius, n)
 				local a = object.landingstripangle
@@ -171,9 +171,14 @@ function graphics.draw()
 	end]]
 	graphics.drawshape(graphics.vector[ships[player.ship].vector], player.x, player.y, ships[player.ship].size, player.angle)
 	if player.autopilot then
-		love.graphics.setColor(255,255,255,50)
-		love.graphics.circle('fill', player.targetx, player.targety, 18000/ships[player.ship].acc, 20)
-		love.graphics.setColor(255,255,255)
+		local r = 18000/ships[player.ship].acc
+		love.graphics.circle('line', player.targetx, player.targety, r, n)
+		local x1 = r*math.cos(state.totaltime)
+		local y1 = r*math.sin(state.totaltime)
+		local x2 = r*math.cos(hp+state.totaltime)
+		local y2 = r*math.sin(hp+state.totaltime)
+		love.graphics.line(player.targetx + x1, player.targety + y1, player.targetx - x1, player.targety - y1)
+		love.graphics.line(player.targetx + x2, player.targety + y2, player.targetx - x2, player.targety - y2)
 	end
 	--[[if player.spaghetti_amount then
 		love.graphics.pop()
