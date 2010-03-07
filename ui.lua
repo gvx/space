@@ -74,6 +74,9 @@ function ui.update(dt)
 	else
 		ui.autopilot = false
 	end
+	if D'b' then
+		player.braking = true
+	end
 	if player.landed and not ui.showlanded then
 		ui.showlanded = 1
 		ui._landed = player.landed
