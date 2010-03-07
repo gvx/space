@@ -56,7 +56,7 @@ function ai.brake(ship, dt)
 		ship.dx = ship.dx + acc*math.cos(ship.angle)
 		ship.dy = ship.dy + acc*math.sin(ship.angle)
 	end
-	return math.sqrt(ship.dx^2 + ship.dy^2) < 20
+	return math.sqrt(ship.dx^2 + ship.dy^2) < 10
 end
 
 function ai.update(dt)
