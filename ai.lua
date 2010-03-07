@@ -5,28 +5,32 @@ end
 
 function ai.approach(ship, targetx, targety, dt)
 	local d = math.sqrt((ship.x-targetx)^2 + (ship.y-targety)^2)
-	local dirangle = math.atan2(targety-ship.y-ship.dy, targetx-ship.x-ship.dx)
+	local dirangle = math.atan2(targety-ship.y-ship.dy*3, targetx-ship.x-ship.dx*3)
+	local movangle = math.atan2(ship.dy, ship.dx)
 	local a = (ship.angle-dirangle)%(2*math.pi)
-	print(math.floor(a/math.pi*180), dirangle/math.pi*180)
+	local a2 = (ship.angle-movangle)%(2*math.pi)
 	local rot = ships[ship.ship].rot*dt
 	local v = math.sqrt(ship.dx^2 + ship.dy^2)
 	local time_needed_to_stop = v / ships[ship.ship].acc
 	local braking_distance = .5 * v^2 / ships[ship.ship].acc
-	local time_to_rotate = math.abs(math.pi - a) / ships[ship.ship].rot
+	local time_to_rotate = math.abs(math.pi - a2) / ships[ship.ship].rot
 	local maxspeed = 800
+	print (d, a, a2)
 	if d <= braking_distance + time_to_rotate * v then
 		--slow down
-		if a > math.pi+.2 then
+		print'down'
+		if a2 > math.pi+.2 then
 			ship.angle = ship.angle - rot
-		elseif a < math.pi-.2 then
+		elseif a2 < math.pi-.2 then
 			ship.angle = ship.angle + rot 
-		else
-			local acc = ships[ship.ship].acc*dt
+		elseif v > 50 then
+			local acc = ships[ship.ship].acc*dt * ships[ship.ship].revengine
 			ship.dx = ship.dx + acc*math.cos(ship.angle)
 			ship.dy = ship.dy + acc*math.sin(ship.angle)
 		end
 	elseif v < maxspeed then
 		--speed up
+		print'up'
 		if a > math.pi and a < 2*math.pi-.2 then
 			ship.angle = ship.angle + rot
 		elseif a < math.pi and a > .2 then
@@ -36,6 +40,9 @@ function ai.approach(ship, targetx, targety, dt)
 			ship.dx = ship.dx + acc*math.cos(ship.angle)
 			ship.dy = ship.dy + acc*math.sin(ship.angle)
 		end
+	end
+	if d < 200 then
+		return true
 	end
 end
 

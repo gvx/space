@@ -156,7 +156,7 @@ function graphics.draw()
 					local r = (1 - st) * object.radius + 200
 					love.graphics.setColor(255,255,255,st*255)
 					love.graphics.line(object.x + 200*math.cos(math.rad(i)), object.y + 200*math.sin(math.rad(i)), object.x + r*math.cos(math.rad(i)), object.y + r*math.sin(math.rad(i)))
-					love.graphics.setColor(255,255,255,255)
+					love.graphics.setColor(255,255,255)
 				end
 			end
 		end
@@ -170,6 +170,11 @@ function graphics.draw()
 		love.graphics.translate(w, h)
 	end]]
 	graphics.drawshape(graphics.vector[ships[player.ship].vector], player.x, player.y, ships[player.ship].size, player.angle)
+	if player.autopilot then
+		love.graphics.setColor(255,255,255,50)
+		love.graphics.circle('fill', player.targetx, player.targety, 200, 20)
+		love.graphics.setColor(255,255,255)
+	end
 	--[[if player.spaghetti_amount then
 		love.graphics.pop()
 	end]]

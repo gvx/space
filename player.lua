@@ -38,9 +38,7 @@ function player.update(dt)
 		player.angle = player.angle + dt * mult * ship.rot
 	end
 	if player.autopilot then
-		ai.approach(player, player.targetx, player.targety, dt)
-		local d = math.sqrt((player.x-player.targetx)^2 + (player.y-player.targety)^2)
-		if d < 200 then
+		if ai.approach(player, player.targetx, player.targety, dt) then
 			player.autopilot = false
 		end
 	end
