@@ -23,6 +23,7 @@ function player.update(dt)
 	local D = love.keyboard.isDown
 	if D"up" or D"w" then
 		player.autopilot = false
+		player.braking = false
 		local ddx = dt*math.cos(player.angle) * ship.acc * mult
 		local ddy = dt*math.sin(player.angle) * ship.acc * mult
 		if (ddx>0) ~= (player.dx>0) then ddx = ddx * ship.revengine end
@@ -32,15 +33,24 @@ function player.update(dt)
 	end
 	if D"right" or D"d" then
 		player.autopilot = false
+		player.braking = false
 		player.angle = player.angle - dt * mult * ship.rot
 	elseif D"left" or D"a" then
 		player.autopilot = false
+		player.braking = false
 		player.angle = player.angle + dt * mult * ship.rot
 	end
 	if player.autopilot then
-		if ai.approach(player, player.targetx, player.targety, dt) then
-			player.autopilot = false
+		if player.braking then
+			player.braking = not ai.brake(player, dt)
+		else
+			if ai.approach(player, player.targetx, player.targety, dt) then
+				player.autopilot = false
+				player.braking = true
+			end
 		end
+	elseif player.braking then
+		player.braking = not ai.brake(player, dt) --stop after reaching target
 	end
 	player.x = player.x + player.dx * dt
 	player.y = player.y + player.dy * dt

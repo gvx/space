@@ -38,9 +38,25 @@ function ai.approach(ship, targetx, targety, dt)
 			ship.dy = ship.dy + acc*math.sin(ship.angle)
 		end
 	end
-	if d < 200 then
+	if d < 18000/ships[ship.ship].acc then
 		return true
 	end
+end
+
+function ai.brake(ship, dt)
+	local movangle = math.atan2(ship.dy, ship.dx)
+	local a = (ship.angle-movangle)%(2*math.pi)
+	local rot = ships[ship.ship].rot*dt
+	if a > math.pi+.2 then
+		ship.angle = ship.angle - rot
+	elseif a < math.pi-.2 then
+		ship.angle = ship.angle + rot 
+	else
+		local acc = ships[ship.ship].acc*dt * ships[ship.ship].revengine
+		ship.dx = ship.dx + acc*math.cos(ship.angle)
+		ship.dy = ship.dy + acc*math.sin(ship.angle)
+	end
+	return math.sqrt(ship.dx^2 + ship.dy^2) < 20
 end
 
 function ai.update(dt)

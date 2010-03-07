@@ -172,7 +172,7 @@ function graphics.draw()
 	graphics.drawshape(graphics.vector[ships[player.ship].vector], player.x, player.y, ships[player.ship].size, player.angle)
 	if player.autopilot then
 		love.graphics.setColor(255,255,255,50)
-		love.graphics.circle('fill', player.targetx, player.targety, 200, 20)
+		love.graphics.circle('fill', player.targetx, player.targety, 18000/ships[player.ship].acc, 20)
 		love.graphics.setColor(255,255,255)
 	end
 	--[[if player.spaghetti_amount then
