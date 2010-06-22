@@ -112,9 +112,10 @@ function love.mousepressed(x,y,button) --oh god this can't be right
 	end
 end
 
+local abs, cos = math.abs, math.cos
 function ui.draw()
 	if ui.show then
-		love.graphics.setColor(0,0,0,50)
+		love.graphics.setColor(0,0,0,90)
 		love.graphics.rectangle('fill', 36, 24, 300, 84-20)
 		love.graphics.setColor(255,255,255,255)
 		love.graphics.print(("Speed: %02d km/s"):format(math.sqrt(player.dx^2 + player.dy^2)/5), 40, 40)
@@ -132,15 +133,24 @@ function ui.draw()
 		love.graphics.setLineWidth(1)
 		love.graphics.line(754-20, 576-20, 796-20, 474-20)
 		if state.current == 'paused' then
-			love.graphics.print("GAME PAUSED", 40, 80)
+			love.graphics.setColor(255,255,255,abs(cos(state.frame*.1))*160+95)
+			love.graphics.rectangle('fill', 400-60, 300-90, 35, 180)
+			love.graphics.rectangle('fill', 400+30, 300-90, 35, 180)
+			love.graphics.setColor(255,255,255,255)
 		end
 		love.graphics.setColor(0,0,0,255)
 		love.graphics.print("Zoom", 756-20, 592-20)
 		love.graphics.setColor(255,255,255,255)
 		if ui.autopilot then
+			love.graphics.setColor(0,0,0,90)
+			love.graphics.rectangle('fill', 16, 578, 600, 20)
+			love.graphics.setColor(255,255,255,255)
 			love.graphics.print("Auto pilot: click on an area to go there.", 20, 592)
 		end
 		if player.landed or ui.showlanded then
+			love.graphics.setColor(0,0,0,90)
+			love.graphics.rectangle('fill', 16, 558, 600, 20)
+			love.graphics.setColor(255,255,255,255)
 			love.graphics.print("Landed on "..(ui._landed or player.landed).name..". Press Enter to open base dialog.", 20, 572)
 		end
 	end

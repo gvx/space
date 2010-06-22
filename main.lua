@@ -61,6 +61,7 @@ function love.update(dt)
 		mission.update(dt)
 		love.timer.sleep(10)
 	elseif state.current == 'paused' then
+		state.frame = state.frame + 1
 		love.timer.sleep(20)
 	elseif state.current == 'dead' then
 		love.timer.sleep(50)
