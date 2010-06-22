@@ -199,7 +199,7 @@ function states.mainmenu.keypressed.up()
 	end
 end
 
-states.mainmenu.keypressed['return'] = function()
+function states.mainmenu.keypressed.enter()
 	mainmenu.actions[mainmenu.selitem]()
 end
 
@@ -219,7 +219,7 @@ function states.mainmenu_settings.keypressed.down()
 	mainmenu.settings.timeout = 0
 end
 
-states.mainmenu_settings.keypressed['return'] = function()
+function states.mainmenu_settings.keypressed.enter()
 	local s = mainmenu.settings.items[mainmenu.settings.selitem]
 	if s.type == 'return' then
 		states.mainmenu_settings.keypressed.escape()

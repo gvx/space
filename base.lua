@@ -86,7 +86,7 @@ end
 function states.base_mission.keypressed.escape()
 	state.current = 'base'
 end
-states.base_mission.keypressed['return'] = function()
+function states.base_mission.keypressed.enter()
 	if not mission.mission or mission.mission.canrefuse then
 		mission.newmission = base.mission.list[1]
 		love.graphics.setFont(mediumfont)

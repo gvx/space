@@ -189,7 +189,7 @@ function ui.base.update(dt)
 		ui.base.usedmouse = true
 		if love.mouse.isDown'l' then
 			--change state
-			states.base.keypressed["return"]()
+			states.base.keypressed.enter()
 		end
 	end
 	for i=1,#ui.base.rot do
@@ -209,7 +209,7 @@ function states.game.keypressed.p()
 	state.current = 'paused'
 end
 
-states.game.keypressed["return"] = function ()
+function states.game.keypressed.enter ()
 	if player.landed then
 		state.current = 'base'
 	end
@@ -235,7 +235,7 @@ function states.base.keypressed.right()
 	ui.base.selected = (ui.base.selected or nitems) % nitems + 1
 end
 
-states.base.keypressed["return"] = function()
+function states.base.keypressed.enter()
 	if ui.base.selected then
 		state.current = 'base_'.. ui.base.states[ui.base.selected]
 		if base[ui.base.states[ui.base.selected]].init then

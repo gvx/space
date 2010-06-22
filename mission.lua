@@ -61,17 +61,17 @@ function states.mission.keypressed.escape()
 	state.current = 'game'
 end
 
-states.mission.keypressed['return'] = function()
+function states.mission.keypressed.enter()
 	mission.mission = mission.newmission
 	mission.newmission = nil
 	love.graphics.setFont(smallfont)
 	state.current = 'game'
 	if mission.mission.accept then
 		mission.mission.accept()
-	end
+	end.enter
 end
 
-states.mission_debrief.keypressed['return'] = function()
+function states.mission_debrief.keypressed.enter()
 	mission.mission = nil
 	love.graphics.setFont(smallfont)
 	state.current = 'game'

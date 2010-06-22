@@ -110,6 +110,7 @@ function love.draw()
 end
 
 function love.keypressed(key, unicode)
+	if key == 'return' then key = 'enter' end
 	if states[state.current].keypressed[key] then
 		states[state.current].keypressed[key]()
 	end
