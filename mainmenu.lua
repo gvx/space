@@ -92,7 +92,8 @@ function mainmenu.update(dt)
 	if love.mouse.isDown'l' then
 		local y = love.mouse.getY() 
 		if y > 300 + 40 - 30  - mainmenu.sely and y < 300 + 40*#mainmenu.items - mainmenu.sely then
-			mainmenu.actions[math.floor((y - 300 + 30 + mainmenu.sely)/40)]()
+			mainmenu.selitem = math.floor((y - 300 + 30 + mainmenu.sely)/40)
+			states.mainmenu.keypressed.enter()
 		end
 	end
 end
@@ -156,7 +157,8 @@ function mainmenu.transition.draw()
 	love.graphics.push()
 	local y = 300 + mainmenu.selitem * 40 - mainmenu.sely
 	love.graphics.translate(300, y)
-	love.graphics.scale(.5/t,.5/t)--mainmenu.transition.timeout*2, 1)
+	--love.graphics.scale(.5/t,.5/t)--mainmenu.transition.timeout*2, 1)
+	love.graphics.rotate((0.707-t^.5)*8)
 	love.graphics.translate(-300, -y)
 	mainmenu.draw(510*t)
 	love.graphics.pop()

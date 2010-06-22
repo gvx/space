@@ -1,4 +1,4 @@
-base = {buyship = {scrolly = 0, maxscrolly = 520, scrolling = false}, mission = {}}
+base = {buyship = {scrolly = 0, maxscrolly = 520, scrolling = false}, mission = {}, trade = {}, talk = {}, visit = {}}
 registerstate'base_mission'
 registerstate'base_trade'
 registerstate'base_buyship'

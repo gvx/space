@@ -68,7 +68,7 @@ function states.mission.keypressed.enter()
 	state.current = 'game'
 	if mission.mission.accept then
 		mission.mission.accept()
-	end.enter
+	end
 end
 
 function states.mission_debrief.keypressed.enter()
