@@ -152,6 +152,7 @@ function mainmenu.transition.update(dt)
 	if mainmenu.transition.timeout <= 0 then
 		state.current = mainmenu.transition.target
 		love.graphics.setFont(mainmenu.transition.targetfont)
+		love.update(0.001)
 	end
 end
 function mainmenu.transition.draw()

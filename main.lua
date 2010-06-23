@@ -4,7 +4,8 @@ math.randomseed(os.time())
 state = {frame = 0, totaltime = 0, current = 'mainmenu'}
 states = {}
 
-officialnames = {spacecorp = 'SpaceCorp', }
+officialnames = {spacecorp = 'SpaceCorp', a = 'Amania', b = 'Bzadoria',
+	c = 'Cadadonia', d = 'Darzamin'}
 
 function registerstate(name)
 	states[name] = {}
@@ -52,6 +53,7 @@ function love.update(dt)
 		state.frame = state.frame + 1
 		state.totaltime = state.totaltime + dt
 		
+		mission.update(dt)
 		map.update(dt)
 		ui.update(dt)
 		player.update(dt)
@@ -59,7 +61,6 @@ function love.update(dt)
 		ships.update(dt)
 		physics.update(dt)
 		graphics.update(dt)
-		mission.update(dt)
 		love.timer.sleep(10)
 	elseif state.current == 'paused' then
 		state.frame = state.frame + 1
