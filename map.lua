@@ -36,7 +36,7 @@ function map.new()
 	map.objects.homebase = {type='base', owner='a', x = s2p(-200), y = s2p(-200), radius = 300, landingstripangle = 0--[[math.random()*2*math.pi]], name='Amania capital', shipsselling = {'speeder', 'fighter'}}
 	table.insert(map.objects, {type='planet', x = s2p(-205), y = s2p(-190), radius = 200, })
 	table.insert(map.objects, {type='base', owner='a', x = s2p(-188), y = s2p(-203), radius = 250, landingstripangle = math.random()*2*math.pi, name='Ugumi', shipsselling = {}})
-	map.objects.friendbase = {type='base', owner='b', x = s2p(200), y = s2p(-200), radius = 300, landingstripangle = math.random()*2*math.pi, name='Bzadoria capital', shipsselling = {'speeder', 'fighter'}}
+	map.objects.friendbase = {type='base', owner='b', x = s2p(200), y = s2p(-200), radius = 300, landingstripangle = math.random()*2*math.pi, name='Bzadoria capital', shipsselling = {'speeder', 'fighter', 'fighter', 'beginner', 'fighter', 'speeder'}}
 	map.objects.neutralbase = {type='base', owner='c', x = s2p(-200), y = s2p(200), radius = 300, landingstripangle = math.random()*2*math.pi, name='Cadadonia capital', shipsselling = {'speeder', 'fighter'}}
 	map.objects.hostilebase = {type='base', owner='d', x = s2p(200), y = s2p(200), radius = 300, landingstripangle = math.random()*2*math.pi, name='Darzamin capital', shipsselling = {}}
 	map.objects.blackhole = {type='black hole', x = 0, y = 0, radius = 7000}

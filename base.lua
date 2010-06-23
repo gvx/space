@@ -52,12 +52,14 @@ function base.draw()
 			graphics.drawshape(graphics.vector[ships[ship].vector], 80, 20 + i * 150 - 150 + 60 - dispos, math.min(ships[ship].size, 15), 0)
 			love.graphics.printf(ships[ship].description, 140, 20 + i * 150 - 150 + 20 - dispos, 700 - 120 - 20)
 		end
-		love.graphics.setColor(70,70,70)
-		love.graphics.roundrect('fill', 780, 20, 15, 560, 5,5)
-		love.graphics.roundrect('line', 780, 20, 15, 560, 5,5)
-		love.graphics.setColor(200,200,200)
-		love.graphics.roundrect('fill', 780, 20+base.buyship.scrolly, 15, 40, 5, 5)
-		love.graphics.roundrect('line', 780, 20+base.buyship.scrolly, 15, 40, 5, 5)
+		if #player.landed.shipsselling > 4 then
+			love.graphics.setColor(70,70,70)
+			love.graphics.roundrect('fill', 780, 20, 15, 560, 5,5)
+			love.graphics.roundrect('line', 780, 20, 15, 560, 5,5)
+			love.graphics.setColor(200,200,200)
+			love.graphics.roundrect('fill', 780, 20+base.buyship.scrolly, 15, 40, 5, 5)
+			love.graphics.roundrect('line', 780, 20+base.buyship.scrolly, 15, 40, 5, 5)
+		end
 	elseif state.current == 'base_talk' then
 		love.graphics.print('There is no talking to do at the moment. Come back later.', 20, 20)
 		love.graphics.print('(maybe next version ;)', 20, 40)
