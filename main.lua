@@ -24,6 +24,7 @@ function love.load()
 	require "mainmenu"
 	require "base"
 	require "mission"
+	require "diplomacy"
 	
 	smallfont = love.graphics.newFont('gemfontone.ttf', 16)
 	largefont = love.graphics.newFont('gemfontone.ttf', 30)
