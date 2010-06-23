@@ -39,6 +39,25 @@ function mission.missionupdate(dt)
 			mission.finishedanim = true
 		end
 	end
+	if mission.closing then
+		mission.animx = mission.animx + dt*3
+		if mission.animx > 2.55 then
+			if mission.accepting then
+				mission.mission = mission.newmission
+				if mission.mission.accept then
+					mission.mission.accept()
+				end
+			elseif mission.newmission.refuse then
+				mission.newmission.refuse()
+			end
+			mission.newmission = nil
+			mission.animx = 0
+			mission.finishedanim = nil
+			love.graphics.setFont(smallfont)
+			state.current = 'game'
+			mission.closing = false
+		end
+	end
 end
 
 function mission.missiondraw()
@@ -57,31 +76,13 @@ end
 
 
 function states.mission.keypressed.escape()
-	if not mission.newmission.canrefuse then
-		mission.mission = mission.newmission
-		if mission.mission.accept then
-			mission.mission.accept()
-		end
-	elseif mission.newmission.refuse then
-		mission.newmission.refuse()
-	end
-	mission.newmission = nil
-	mission.animx = 0
-	mission.finishedanim = nil
-	love.graphics.setFont(smallfont)
-	state.current = 'game'
+	mission.accepting = not mission.newmission.canrefuse
+	mission.closing = true
 end
 
 function states.mission.keypressed.enter()
-	mission.mission = mission.newmission
-	mission.newmission = nil
-	mission.animx = 0
-	mission.finishedanim = nil
-	love.graphics.setFont(smallfont)
-	state.current = 'game'
-	if mission.mission.accept then
-		mission.mission.accept()
-	end
+	mission.accepting = true
+	mission.closing = true
 end
 
 function states.mission_debrief.keypressed.enter()
