@@ -5,31 +5,32 @@ mainmenu = {
 	items = {'New game', 'Continue', 'Settings', 'Credits', 'Quit'},
 	actions = {
 		function ()
-			love.graphics.setFont(smallfont)
+			mainmenu.transition.targetfont = smallfont
 			mainmenu.transition.timeout = .5
 			mainmenu.transition.target = 'game'
 			state.current = 'mainmenu_transition'
 		end,
 		function ()
-			love.graphics.setFont(smallfont)
+			mainmenu.transition.targetfont = smallfont
 			mainmenu.transition.timeout = .5
 			mainmenu.transition.target = 'game'
 			state.current = 'mainmenu_transition'
 		end,
 		function ()
-			love.graphics.setFont(largefont)
+			mainmenu.transition.targetfont = largefont
 			mainmenu.transition.timeout = .5
 			mainmenu.transition.target = 'mainmenu_settings'
 			state.current = 'mainmenu_transition'
 		end,
 		function ()
-			love.graphics.setFont(largefont)
+			mainmenu.transition.targetfont = largefont
 			mainmenu.credits.totaltime = 0
 			mainmenu.transition.timeout = .5
 			mainmenu.transition.target = 'mainmenu_credits'
 			state.current = 'mainmenu_transition'
 		end,
 		function ()
+			mainmenu.transition.targetfont = largefont
 			mainmenu.credits.totaltime = 0
 			mainmenu.transition.timeout = .5
 			mainmenu.transition.target = 'mainmenu_quitting'
@@ -150,6 +151,7 @@ function mainmenu.transition.update(dt)
 	mainmenu.transition.timeout = mainmenu.transition.timeout - dt
 	if mainmenu.transition.timeout <= 0 then
 		state.current = mainmenu.transition.target
+		love.graphics.setFont(mainmenu.transition.targetfont)
 	end
 end
 function mainmenu.transition.draw()
