@@ -146,7 +146,7 @@ function graphics.draw()
 					love.graphics.scale(object.spaghetti_amount, 1)
 					love.graphics.rotate(-object.spaghetti_angle)
 				end]]
-				graphics.drawshape(graphics.vector[ships[object.ship].vector], object.x, object.y, ships[object.ship].size, object.angle)
+				graphics.drawshape(graphics.vector[object.ship.vector], object.x, object.y, object.ship.size, object.angle)
 				--[[if object.spaghetti_amount then
 					love.graphics.pop()
 				end]]
@@ -169,9 +169,9 @@ function graphics.draw()
 		love.graphics.rotate(-player.spaghetti_angle)
 		love.graphics.translate(w, h)
 	end]]
-	graphics.drawshape(graphics.vector[ships[player.ship].vector], player.x, player.y, ships[player.ship].size, player.angle)
+	graphics.drawshape(graphics.vector[player.ship.vector], player.x, player.y, player.ship.size, player.angle)
 	if player.autopilot then
-		local r = 18000/ships[player.ship].acc
+		local r = 18000/player.ship.acc
 		love.graphics.circle('line', player.targetx, player.targety, r, n)
 		local x1 = r*math.cos(state.totaltime)
 		local y1 = r*math.sin(state.totaltime)

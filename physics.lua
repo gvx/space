@@ -13,10 +13,10 @@ function gravitate(ship, dt)
 			if d < 500 then
 				local a = 100*object.radius*object.radius/d/d
 				local angle = math.atan2(ship.y-object.y, ship.x-object.x)
-				if (d < object.radius + ships[ship.ship].size + 60 and
+				if (d < object.radius + ship.ship.size + 60 and
 				   object.landingstripangle and
 				   math.abs(p-(object.landingstripangle - angle)%p2) > p-.2) then
-					local r = object.radius + ships[ship.ship].size + 60
+					local r = object.radius + ship.ship.size + 60
 					local ship_x = object.x + r*math.cos(angle)
 					local ship_y = object.y + r*math.sin(angle)
 					--ship.dx = ship.dx + (ship_x - ship.x)*dt
@@ -28,8 +28,8 @@ function gravitate(ship, dt)
 					if ship == player then
 						player.landed = object
 					end
-				elseif d < object.radius + ships[ship.ship].size then
-					local r = object.radius + ships[ship.ship].size
+				elseif d < object.radius + ship.ship.size then
+					local r = object.radius + ship.ship.size
 					local ship_x = object.x + r*math.cos(angle)
 					local ship_y = object.y + r*math.sin(angle)
 					--ship.dx = ship.dx + (ship_x - ship.x)*dt

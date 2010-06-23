@@ -30,14 +30,24 @@ function ships.load()
 	ships.superspeeder.description = 'Super speeder\n\nVery fast, agile and quite nimble. Useful to lose anyone tailing you -- or outmaneuvering black holes too close for comfort.'
 	
 	local s2p = sectortopixels
-	table.insert(map.objects, {type = 'ship', x = s2p(-200), y = s2p(-200)+300, dx = 80, dy = 0, angle = 0, ship= 'fighter',fleet={}, targetx=s2p(-200)+800, targety=s2p(-200)-400, nexttarget = function (self) return map.objects.blackhole.x, map.objects.blackhole.y end})
-	table.insert(map.objects, {type = 'ship', x = s2p(-200)-200, y = s2p(-200)+300, dx = 100, dy = 0, angle = 0, ship= 'bomber', following = map.objects[#map.objects]})
+	table.insert(map.objects, {type = 'ship', x = s2p(-200), y = s2p(-200)+300, dx = 80, dy = 0, angle = 0, ship= newship'fighter',fleet={}, targetx=s2p(-200)+800, targety=s2p(-200)-400, nexttarget = function (self) return map.objects.blackhole.x, map.objects.blackhole.y end})
+	table.insert(map.objects, {type = 'ship', x = s2p(-200)-200, y = s2p(-200)+300, dx = 100, dy = 0, angle = 0, ship= newship'bomber', following = map.objects[#map.objects]})
 	
 	for k,v in pairs(ships) do
 		if type(v) == 'table' and v.hull then
 			table.insert(map.objects.hostilebase.shipsselling, k)
 		end
 	end
+end
+
+function newship(ship)
+	local s = {}
+	for k,v in pairs(ships[ship]) do
+		s[k] = v
+	end
+	s.cargo = {}
+	s.name = ship
+	return s
 end
 
 function ships.update(dt)

@@ -13,13 +13,13 @@ function player.load()
 	player.angle = 0
 	--player.acc = 20
 	player.rank = 1
-	player.ship = 'beginner'
+	player.ship = newship'beginner'
 	player.remove = false
 end
 
 function player.update(dt)
 	local mult = love.keyboard.isDown("lshift") and 3 or 1
-	local ship = ships[player.ship]
+	local ship = player.ship
 	local D = love.keyboard.isDown
 	if D"up" or D"w" then
 		player.autopilot = false
@@ -62,7 +62,7 @@ end
 
 local nextship = {beginner = 'vessel', vessel = 'fighter', fighter='bomber', bomber='speeder', speeder = 'betterspeeder', betterspeeder = 'superspeeder', superspeeder = 'beginner'}
 function states.game.keypressed.tab()
-	player.ship = nextship[player.ship]
+	player.ship = newship(nextship[player.ship.name])
 end
 function states.dead.keypressed.r()
 	restart()
