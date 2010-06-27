@@ -26,10 +26,17 @@ Have fun.]],
 	end,
 	accept = function()
 		--put some cargo in player ship
+		table.insert(player.ship.cargo, 'package')
 	end,
 	refuse = nil, --this one can't be refused
 	checkcompleted = function()
 		if player.landed and player.landed.name == 'Ugumi' then
+			for i=1,#player.ship.cargo do
+				if player.ship.cargo[i] == 'package' then
+					table.remove(player.ship.cargo, i)
+					break
+				end
+			end
 			return true
 		end
 	end,

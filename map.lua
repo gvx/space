@@ -40,6 +40,7 @@ function map.new()
 	map.objects.neutralbase = {type='base', owner='c', x = s2p(-200), y = s2p(200), radius = 300, landingstripangle = math.random()*2*math.pi, name='Cadadonia capital', shipsselling = {'speeder', 'fighter'}}
 	map.objects.hostilebase = {type='base', owner='d', x = s2p(200), y = s2p(200), radius = 300, landingstripangle = math.random()*2*math.pi, name='Darzamin capital', shipsselling = {}}
 	map.objects.blackhole = {type='black hole', x = 0, y = 0, radius = 7000}
+	map.objectreserve = {package = {type='special', name='A curious package', weight=1}}
 end
 
 function map.update(dt)
