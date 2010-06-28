@@ -1,5 +1,6 @@
 ui = {
 	show = true,
+	showcargoindex = 1,
 	base = {
 		items = {'Mission', 'Trade', 'Buy a ship', 'Talk', 'Visit'},
 		posses = {x = 20, y = 80, dx = 140, w = 120, h = 120, r = 20},
@@ -153,6 +154,17 @@ function ui.draw()
 			love.graphics.setColor(255,255,255,255)
 			love.graphics.print("Landed on "..(ui._landed or player.landed).name..". Press Enter to open base dialog.", 20, 572)
 		end
+		if ui.showcargo then
+			love.graphics.setColor(0,0,0,90)
+			love.graphics.rectangle('fill', 36, 120, 500, 200)
+			love.graphics.setColor(255,255,255,90)
+			love.graphics.rectangle('fill', 36, 120+ui.showcargoindex*20, 500, 18)
+			love.graphics.setColor(255,255,255,255)
+			love.graphics.print('Cargo:', 40, 136)
+			for i=1,#player.ship.cargo do
+				love.graphics.print(map.objectreserve[player.ship.cargo[i]].name, 40, 136 + 20 * i)
+			end
+		end
 	end
 end
 
@@ -258,4 +270,20 @@ end
 function states.game.keypressed.escape()
 	state.current = 'mainmenu'
 	love.graphics.setFont(largefont)
+end
+
+function states.game.keypressed.c()
+	ui.showcargo = not ui.showcargo
+end
+
+function states.game.keypressed.j()
+	if ui.showcargo then
+		ui.showcargoindex = ui.showcargoindex % #player.ship.cargo + 1
+	end
+end
+
+function states.game.keypressed.k()
+	if ui.showcargo then
+		ui.showcargoindex = (ui.showcargoindex-2) % #player.ship.cargo + 1
+	end
 end

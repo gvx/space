@@ -71,3 +71,12 @@ end
 
 function player.draw()
 end
+
+function states.game.keypressed.m()
+	player.ship.cargo = {}
+end
+
+
+function states.game.keypressed.n()
+	player.ship.cargo = {'package', 'package', 'package', 'package', 'package'}
+end
