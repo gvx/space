@@ -9,11 +9,11 @@ Are you interested in doing something dangerous and XTREME? Are you interested i
 
 Seek no further! SpaceCorp has a new reality show, in which contestants have to fly within the danger-zone of the black hole.
 
-Accept this mission for the ride of your life! (SpaceCorp is not responsable for injuries or death.)]],
+Accept this mission for the ride of your life! (SpaceCorp is not responsible for injuries or death.)]],
 	debrief = [[
 Oh, you actually flew this close to the black hole?
 
-I'm sorry we forgot to tell you, but the show's not going through. Something about breaking the law.
+I'm sorry we forgot to tell you, but the show's been cancelled. Something about being illegal. Can you imagine?
 
 Anyway, here is your money.]],
 	canrefuse=true,
