@@ -150,7 +150,9 @@ function ui.draw()
 			love.graphics.setColor(0,0,0,90)
 			love.graphics.rectangle('fill', 36, 120, 500, 200)
 			love.graphics.setColor(255,255,255,90)
-			love.graphics.rectangle('fill', 36, 120+ui.showcargoindex*20, 500, 18)
+			if ui.showcargoindex <= #player.ship.cargo then
+				love.graphics.rectangle('fill', 36, 122+ui.showcargoindex*20, smallfont:getWidth(map.objectreserve[player.ship.cargo[ui.showcargoindex]].name)+8, 18)
+			end
 			love.graphics.setColor(255,255,255,255)
 			love.graphics.print('Cargo:', 40, 136)
 			for i=1,#player.ship.cargo do
@@ -269,13 +271,13 @@ function states.game.keypressed.c()
 end
 
 function states.game.keypressed.j()
-	if ui.showcargo then
+	if ui.showcargo and #player.ship.cargo > 0 then
 		ui.showcargoindex = ui.showcargoindex % #player.ship.cargo + 1
 	end
 end
 
 function states.game.keypressed.k()
-	if ui.showcargo then
+	if ui.showcargo and #player.ship.cargo > 0 then
 		ui.showcargoindex = (ui.showcargoindex-2) % #player.ship.cargo + 1
 	end
 end
