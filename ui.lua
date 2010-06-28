@@ -60,17 +60,9 @@ function ui.update(dt)
 		ui.autopilot = true
 		if love.mouse.isDown'l' then
 			player.autopilot = true
-			player.hyperspeed = false
 			player.targetx = (love.mouse.getX()-400)/graphics.zoom + graphics.viewx
 			player.targety = (love.mouse.getY()-300)/-graphics.zoom + graphics.viewy
-		end
-	elseif D'k' then
-		ui.autopilot = true
-		if love.mouse.isDown'l' then
-			player.autopilot = true
-			player.hyperspeed = true
-			player.targetx = (love.mouse.getX()-400)/graphics.zoom + graphics.viewx
-			player.targety = (love.mouse.getY()-300)/-graphics.zoom + graphics.viewy
+			player.hyperspeed = D'lshift' or D'rshift'
 		end
 	else
 		ui.autopilot = false
