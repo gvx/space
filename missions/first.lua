@@ -17,7 +17,7 @@ I want to thank you for delivering that cargo.
 
 If you ever want to work for SpaceCorp again, just land on a planet where SpaceCorp has a division (which is nearly any planet you can find) and take on a mission there.
 
-Of course other parties have missions for you to pick from as well, but they won't pay as much as we.
+Of course other parties have missions for you to pick from as well, but they won't pay as much as we do.
 
 Have fun.]],
 	canrefuse=false,
