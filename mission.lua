@@ -37,13 +37,13 @@ end
 
 function mission.missionupdate(dt)
 	if not mission.finishedanim then
-		mission.animx = mission.animx + dt
+		mission.animx = mission.animx + dt*2
 		if mission.animx > .5 then
 			mission.finishedanim = true
 		end
 	end
 	if mission.closing then
-		mission.animx = mission.animx + dt*3
+		mission.animx = mission.animx + dt*6
 		if mission.animx > 2.55 then
 			if mission.accepting then
 				mission.mission = mission.newmission
