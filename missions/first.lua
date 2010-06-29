@@ -3,7 +3,7 @@ return {
 	name='Your very first mission',
 	commissionedby='spacecorp',
 	description = [[
-Hello, young spaceman. This is Guisseppe from SpaceCorp speaking. I have a mission for you.
+Hello, young spaceman. This is Guisseppe from $spacecorp speaking. I have a mission for you.
 
 You need to take some cargo to a neighbouring planet, called Ugumi. If you do so, you will be rewarded.
 
@@ -11,7 +11,7 @@ Note that you can't refuse this mission, nor accept any other mission before you
 
 Good luck.]],
 	debrief = [[
-Hello, young spaceman. This is Guiseppe from SpaceCorp again.
+Hello, young spaceman. This is Guiseppe from $spacecorp again.
 
 I want to thank you for delivering that cargo.
 

@@ -10,7 +10,10 @@ function mission.load()
 	mission.list = {}
 	for i,file in ipairs(love.filesystem.enumerate('missions')) do
 		if file:sub(-4) == '.lua' then
-			mission.list[file:sub(1,-5)] = love.filesystem.load('missions/'..file)()
+			local t = love.filesystem.load('missions/'..file)()
+			mission.list[file:sub(1,-5)] = t
+			t.description = printf(t.description, officialnames)
+			t.debrief = printf(t.debrief, officialnames)
 		end
 	end
 end

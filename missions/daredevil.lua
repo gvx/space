@@ -7,9 +7,9 @@ Hello!
 
 Are you interested in doing something dangerous and XTREME? Are you interested in doing that for shiploads of money?
 
-Seek no further! SpaceCorp has a new reality show, in which contestants have to fly within the danger-zone of the black hole.
+Seek no further! $spacecorp has a new reality show, in which contestants have to fly within the danger-zone of the black hole.
 
-Accept this mission for the ride of your life! (SpaceCorp is not responsible for injuries or death.)]],
+Accept this mission for the ride of your life! ($spacecorp is not responsible for injuries or death.)]],
 	debrief = [[
 Oh, you actually flew this close to the black hole?
 

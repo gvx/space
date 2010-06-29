@@ -1,6 +1,11 @@
 require 'roundrect'
 math.randomseed(os.time())
 
+varfilter = '$(%w+)%$?'
+function printf(template, rep)
+	return (template:gsub(varfilter, rep))
+end
+
 state = {frame = 0, totaltime = 0, current = 'mainmenu'}
 states = {}
 
