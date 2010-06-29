@@ -8,6 +8,8 @@ function mission.load()
 	mission.mission = nil
 	mission.animx = 0
 	mission.list = {}
+	mission.commissions = {a = 1}
+	mission.total = 1
 	for i,file in ipairs(love.filesystem.enumerate('missions')) do
 		if file:sub(-4) == '.lua' then
 			local t = love.filesystem.load('missions/'..file)()
@@ -29,6 +31,9 @@ function mission.update(dt)
 	if mission.mission then
 		if mission.mission.checkcompleted() then
 			mission.mission.completed = true
+			local by = mission.mission.commissionedby
+			mission.commissions[by] = mission.commissions[by] or 0 + 1
+			mission.total = mission.total + 1
 			love.graphics.setFont(mediumfont)
 			state.current = 'mission_debrief'
 		end
