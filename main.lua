@@ -10,7 +10,9 @@ state = {frame = 0, totaltime = 0, current = 'mainmenu'}
 states = {}
 
 officialnames = {spacecorp = 'SpaceCorp', a = 'Amania', b = 'Bzadoria',
-	c = 'Cadadonia', d = 'Darzamin'}
+	c = 'Cadadonia', d = 'Darzamin', ar = 'Anarchists',
+	br = 'Fighters for the Commond Good', cr = 'the Ecclectic Monkeys',
+	dr = 'Alliance of Oppressed People'}
 
 function registerstate(name)
 	states[name] = {}
