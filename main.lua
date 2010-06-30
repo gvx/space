@@ -83,6 +83,9 @@ function love.update(dt)
 	elseif state.current == 'mission' then
 		mission.missionupdate(dt)
 		love.timer.sleep(20)
+	elseif state.current == 'mission_debrief' then
+		mission.mission_debriefupdate(dt)
+		love.timer.sleep(20)
 	elseif state.current:sub(1,4) == 'base' then
 		base.update(dt)
 		love.timer.sleep(20)

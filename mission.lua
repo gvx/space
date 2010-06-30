@@ -35,6 +35,7 @@ function mission.update(dt)
 			mission.commissions[by] = mission.commissions[by] or 0 + 1
 			mission.total = mission.total + 1
 			love.graphics.setFont(mediumfont)
+			mission.animx = 0
 			state.current = 'mission_debrief'
 		end
 	end
@@ -68,6 +69,26 @@ function mission.missionupdate(dt)
 	end
 end
 
+function mission.mission_debriefupdate(dt)
+	if not mission.finishedanim then
+		mission.animx = mission.animx + dt*2
+		if mission.animx > .5 then
+			mission.finishedanim = true
+		end
+	end
+	if mission.closing then
+		mission.animx = mission.animx + dt*6
+		if mission.animx > 2.55 then
+			mission.animx = 0
+			mission.finishedanim = nil
+			mission.mission = nil
+			love.graphics.setFont(smallfont)
+			state.current = 'game'
+			mission.closing = false
+		end
+	end
+end
+
 function mission.missiondraw()
 	love.graphics.setColor(255,255,255)
 	love.graphics.printf(mission.newmission.description, 40, 50, 720)
@@ -80,6 +101,8 @@ function mission.mission_debriefdraw()
 	love.graphics.setColor(255,255,255)
 	love.graphics.printf(mission.mission.debrief, 40, 50, 720)
 	love.graphics.print('Press Enter to continue.', 40, 560)
+	love.graphics.setColor(255,255,255,mission.animx*100)
+	love.graphics.rectangle('fill', 0, 535, 800, 40)
 end
 
 
@@ -94,7 +117,5 @@ function states.mission.keypressed.enter()
 end
 
 function states.mission_debrief.keypressed.enter()
-	mission.mission = nil
-	love.graphics.setFont(smallfont)
-	state.current = 'game'
+	mission.closing = true
 end
