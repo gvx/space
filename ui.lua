@@ -13,6 +13,8 @@ ui = {
 registerstate'paused'
 registerstate'base'
 
+states.game.cmdkeys = {}
+
 function ui.load()
 end
 
@@ -160,6 +162,12 @@ function ui.draw()
 			end
 		end
 	end
+	if ui.cmdstring then
+		love.graphics.setColor(0,0,0,90)
+		love.graphics.rectangle('fill', 398, 24, 200, 20)
+		love.graphics.setColor(255,255,255)
+		love.graphics.print(':'..ui.cmdstring, 400, 38)
+	end
 end
 
 function ui.drawbase()
@@ -279,5 +287,29 @@ end
 function states.game.keypressed.k()
 	if ui.showcargo and #player.ship.cargo > 0 then
 		ui.showcargoindex = (ui.showcargoindex-2) % #player.ship.cargo + 1
+	end
+end
+
+states.game.keypressed[';'] = function()
+	states.game.keypressed, states.game.cmdkeys = states.game.cmdkeys, states.game.keypressed
+	ui.cmdstring = ''
+end
+
+function states.game.cmdkeys.enter()
+	states.game.keypressed, states.game.cmdkeys = states.game.cmdkeys, states.game.keypressed
+	ui.cmdstring = nil
+end
+
+function states.game.cmdkeys.backspace()
+	if ui.cmdstring == '' then
+		states.game.keypressed.enter()
+	else
+		ui.cmdstring = ui.cmdstring:sub(1,-2)
+	end
+end
+
+function states.game.cmdkeys.other(key, unicode)
+	if #key == 1 then
+		ui.cmdstring = ui.cmdstring .. key
 	end
 end

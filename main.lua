@@ -126,5 +126,7 @@ function love.keypressed(key, unicode)
 	if key == 'return' then key = 'enter' end
 	if states[state.current].keypressed[key] then
 		states[state.current].keypressed[key]()
+	elseif states[state.current].keypressed.other then
+		states[state.current].keypressed.other(key, unicode)
 	end
 end
