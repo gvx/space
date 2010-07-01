@@ -313,3 +313,25 @@ function states.game.cmdkeys.other(key, unicode)
 		ui.cmdstring = ui.cmdstring .. key
 	end
 end
+
+function ui.drawlist(list, info)
+	local dispos = math.max(0,#list-4)*150 * info.scrolly / info.maxscrolly
+	for i,item in ipairs(list) do
+		love.graphics.setColor(25,25,25)
+		love.graphics.roundrect('fill', 20, 20 + i * 150 - 150 - dispos, 700, 120, 20, 20)
+		love.graphics.setColor(255,255,255)
+		love.graphics.setLineWidth(3)
+		love.graphics.roundrect('line', 20, 20 + i * 150 - 150 - dispos, 700, 120, 20, 20)
+		--graphics.drawshape(graphics.vector[ships[ship].vector], 80, 20 + i * 150 - 150 + 60 - dispos, math.min(ships[ship].size, 15), 0) --?
+		love.graphics.print(item.name, 140, 20 + i * 150 - 150 + 20)
+		love.graphics.printf(item.description, 140, 40 + i * 150 - 150 + 20 - dispos, 700 - 120 - 20)
+	end
+	if #list > 4 then
+		love.graphics.setColor(70,70,70)
+		love.graphics.roundrect('fill', 780, 20, 15, 560, 5,5)
+		love.graphics.roundrect('line', 780, 20, 15, 560, 5,5)
+		love.graphics.setColor(200,200,200)
+		love.graphics.roundrect('fill', 780, 20+info.scrolly, 15, 40, 5, 5)
+		love.graphics.roundrect('line', 780, 20+info.scrolly, 15, 40, 5, 5)
+	end
+end
