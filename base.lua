@@ -29,15 +29,7 @@ end
 
 function base.draw()
 	if state.current == 'base_mission' then
-		for i,ms in ipairs(base.mission.list) do
-			love.graphics.setColor(25,25,25)
-			love.graphics.roundrect('fill', 20, 20 + i * 150 - 150, 700, 120, 20, 20)
-			love.graphics.setColor(255,255,255)
-			love.graphics.setLineWidth(3)
-			love.graphics.roundrect('line', 20, 20 + i * 150 - 150, 700, 120, 20, 20)
-			love.graphics.print(officialnames[ms.commissionedby], 140, 20 + i * 150 - 150 + 20)
-			love.graphics.printf(ms.name, 140, 40 + i * 150 - 150 + 20, 700 - 120 - 20)
-		end
+		ui.drawlist(base.mission.displist, base.mission.info)
 	elseif state.current == 'base_trade' then
 		love.graphics.print('There is nothing to trade at the moment. Come back later.', 20, 20)
 		love.graphics.print('(maybe next version ;)', 20, 40)
@@ -71,18 +63,25 @@ end
 
 function base.mission.init()
 	base.mission.list = {}
+	local l = base.mission.list
 	for k,v in pairs(mission.list) do
 		if not v.completed and v.available() then
 			v.randomid = math.random() --used for sorting
-			table.insert(base.mission.list, v)
+			table.insert(l, v)
 		end
 	end
-	if #base.mission.list > 10 then
-		table.sort(base.mission.list, function(a,b) return a.randomid < b.randomid end)
-		for i=#base.mission.list,11,-1 do
-			base.mission.list[i] = nil
+	if #l > 10 then
+		table.sort(l, function(a,b) return a.randomid < b.randomid end)
+		for i=#l,11,-1 do
+			l[i] = nil
 		end
 	end
+	base.mission.displist = {}
+	local dl = base.mission.displist
+	for i=1,#l do
+		table.insert(dl, {name = officialnames[l[i].commissionedby], description = l[i].name})
+	end
+	base.mission.info = {scrolly = 0, maxscrolly = 520}
 end
 
 function states.base_mission.keypressed.escape()
