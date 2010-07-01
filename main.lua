@@ -12,7 +12,7 @@ states = {}
 officialnames = {spacecorp = 'SpaceCorp', a = 'Amania', b = 'Bzadoria',
 	c = 'Cadadonia', d = 'Darzamin', ar = 'Anarchists',
 	br = 'Fighters for the Common Good', cr = 'Eclectic Monkeys',
-	dr = 'Alliance of Oppressed People'}
+	dr = 'Alliance of Oppressed People', dem = 'Deus Ex Machines'}
 
 function registerstate(name)
 	states[name] = {}
