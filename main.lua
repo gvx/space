@@ -21,6 +21,8 @@ end
 registerstate'game'
 registerstate'dead'
 
+require "hook"
+
 function love.load()
 	require "map"
 	require "graphics"

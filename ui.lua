@@ -244,6 +244,7 @@ end
 function states.game.keypressed.enter ()
 	if player.landed then
 		state.current = 'base'
+		hook.call('enterbase', player.landed)
 	end
 end
 
@@ -253,6 +254,7 @@ end
 
 function states.base.keypressed.escape()
 	state.current = 'game'
+	hook.call('leavebase', player.landed)
 end
 
 function states.base.keypressed.left()
@@ -269,9 +271,10 @@ end
 
 function states.base.keypressed.enter()
 	if ui.base.selected then
-		state.current = 'base_'.. ui.base.states[ui.base.selected]
-		if base[ui.base.states[ui.base.selected]].init then
-			base[ui.base.states[ui.base.selected]].init()
+		local st = ui.base.states[ui.base.selected]
+		state.current = 'base_'.. st
+		if base[st].init then
+			base[st].init()
 		end
 	end
 end
@@ -307,6 +310,8 @@ function states.game.cmdkeys.enter()
 	states.game.keypressed, states.game.cmdkeys = states.game.cmdkeys, states.game.keypressed
 	if ui.cmdstring == 'showmotion' or ui.cmdstring == 'sm' then
 		ui.showmotion = not ui.showmotion
+	elseif ui.cmdstring ~= '' then
+		hook.call('command', ui.cmdstring)
 	end
 	ui.cmdstring = nil
 end
