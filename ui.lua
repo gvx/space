@@ -225,6 +225,11 @@ function ui.base.update(dt)
 	end
 end
 
+function states.game.keypressed.f1()
+	state.current = 'help'
+	love.graphics.setFont(largefont)
+end
+
 function states.game.keypressed.f7()
 	ui.show = not ui.show
 end

@@ -33,6 +33,7 @@ function love.load()
 	require "base"
 	require "mission"
 	require "diplomacy"
+	require "help"
 	
 	smallfont = love.graphics.newFont('gemfontone.ttf', 16)
 	largefont = love.graphics.newFont('gemfontone.ttf', 30)
@@ -53,6 +54,7 @@ function restart()
 	mainmenu.load()
 	base.load()
 	mission.load()
+	help.load()
 end
 
 function love.update(dt)
@@ -86,6 +88,9 @@ function love.update(dt)
 	elseif state.current == 'mission_debrief' then
 		mission.mission_debriefupdate(dt)
 		love.timer.sleep(20)
+	elseif state.current == 'help' then
+		help.update(dt)
+		love.timer.sleep(20)
 	elseif state.current:sub(1,4) == 'base' then
 		base.update(dt)
 		love.timer.sleep(20)
@@ -104,6 +109,8 @@ function love.draw()
 		ai.draw()
 		ships.draw()
 		physics.draw()
+	elseif state.current == 'help' then
+		help.draw()
 	elseif state.current == 'dead' then
 		love.graphics.print('Nice steering, captain. You\'re dead now.', 100, 100)
 		love.graphics.print('Press R to restart the game.', 100, 120)
