@@ -113,7 +113,7 @@ function love.draw()
 		help.draw()
 	elseif state.current == 'dead' then
 		love.graphics.print('Nice steering, captain. You\'re dead now.', 100, 100)
-		love.graphics.print('Press R to restart the game.', 100, 120)
+		love.graphics.print('Press R to restart the game.', 100, 130)
 	elseif state.current == 'base' then
 		ui.drawbase()
 	elseif state.current == 'mainmenu' then

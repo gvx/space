@@ -57,6 +57,7 @@ function player.update(dt)
 	if player.remove then
 		--player died
 		state.current = 'dead'
+		love.graphics.setFont(mediumfont)
 	end
 end
 
@@ -67,6 +68,7 @@ end
 function states.dead.keypressed.r()
 	restart()
 	state.current = 'game'
+	love.graphics.setFont(smallfont)
 end
 
 function player.draw()
