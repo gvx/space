@@ -107,18 +107,21 @@ function love.mousepressed(x,y,button) --oh god this can't be right
 	end
 end
 
-local abs, cos = math.abs, math.cos
+local abs, cos, sqrt, atan2 = math.abs, math.cos, math.sqrt, math.atan2
 function ui.draw()
 	if ui.show then
 		love.graphics.setColor(0,0,0,90)
 		love.graphics.rectangle('fill', 36, 24, 300, 84-20)
 		love.graphics.setColor(255,255,255,255)
-		love.graphics.print(("Speed: %02d km/s"):format(math.sqrt(player.dx^2 + player.dy^2)/5), 40, 40)
+		love.graphics.print(("Speed: %02d km/s"):format(sqrt(player.dx^2 + player.dy^2)/5), 40, 40)
 		love.graphics.print("Rank: "..ranks[player.rank], 40, 60)
 		if mission.mission then
 			love.graphics.print("Mission: "..mission.mission.name, 40, 80)
 		end
 		graphics.drawshape(graphics.vector.arrow, 750, 40, 15, -player.angle)
+		if ui.showmotion then
+			graphics.drawshape(graphics.vector.arrow, 750, 100, 15, -atan2(player.dy, player.dx))
+		end
 		love.graphics.setColor(255,255,255,20)
 		love.graphics.rectangle('fill', 754-20, 454-20, 43, 143)
 		love.graphics.setColor(0,0,0,100)
@@ -302,6 +305,9 @@ end
 
 function states.game.cmdkeys.enter()
 	states.game.keypressed, states.game.cmdkeys = states.game.cmdkeys, states.game.keypressed
+	if ui.cmdstring == 'showmotion' or ui.cmdstring == 'sm' then
+		ui.showmotion = not ui.showmotion
+	end
 	ui.cmdstring = nil
 end
 
