@@ -34,24 +34,7 @@ function base.draw()
 		love.graphics.print('There is nothing to trade at the moment. Come back later.', 20, 20)
 		love.graphics.print('(maybe next version ;)', 20, 40)
 	elseif state.current == 'base_buyship' then
-		local dispos = math.max(0,#player.landed.shipsselling-4)*150 * base.buyship.scrolly / base.buyship.maxscrolly
-		for i,ship in ipairs(player.landed.shipsselling) do
-			love.graphics.setColor(25,25,25)
-			love.graphics.roundrect('fill', 20, 20 + i * 150 - 150 - dispos, 700, 120, 20, 20)
-			love.graphics.setColor(255,255,255)
-			love.graphics.setLineWidth(3)
-			love.graphics.roundrect('line', 20, 20 + i * 150 - 150 - dispos, 700, 120, 20, 20)
-			graphics.drawshape(graphics.vector[ships[ship].vector], 80, 20 + i * 150 - 150 + 60 - dispos, math.min(ships[ship].size, 15), 0)
-			love.graphics.printf(ships[ship].description, 140, 20 + i * 150 - 150 + 20 - dispos, 700 - 120 - 20)
-		end
-		if #player.landed.shipsselling > 4 then
-			love.graphics.setColor(70,70,70)
-			love.graphics.roundrect('fill', 780, 20, 15, 560, 5,5)
-			love.graphics.roundrect('line', 780, 20, 15, 560, 5,5)
-			love.graphics.setColor(200,200,200)
-			love.graphics.roundrect('fill', 780, 20+base.buyship.scrolly, 15, 40, 5, 5)
-			love.graphics.roundrect('line', 780, 20+base.buyship.scrolly, 15, 40, 5, 5)
-		end
+		ui.drawlist(base.buyship.displist, base.buyship)
 	elseif state.current == 'base_talk' then
 		love.graphics.print('There is no talking to do at the moment. Come back later.', 20, 20)
 		love.graphics.print('(maybe next version ;)', 20, 40)
@@ -82,6 +65,14 @@ function base.mission.init()
 		table.insert(dl, {name = officialnames[l[i].commissionedby], description = l[i].name})
 	end
 	base.mission.info = {scrolly = 0, maxscrolly = 520}
+end
+
+function base.buyship.init()
+	local dl = {}
+	base.buyship.displist = dl
+	for i, v in ipairs(player.landed.shipsselling) do
+		table.insert(dl, {name = '', description = ships[v].description})
+	end
 end
 
 function states.base_mission.keypressed.escape()
