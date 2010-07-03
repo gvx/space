@@ -7,6 +7,7 @@ function hook.add(event, func, id)
 end
 
 function hook.call(event, ...)
+	if not hook.hooks[event] then return end
 	for i=1,#hook.hooks[event] do
 		if hook.hooks[event][i](...) then
 			break
