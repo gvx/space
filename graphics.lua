@@ -122,7 +122,6 @@ end
 local w, h = love.graphics.getWidth()/2, love.graphics.getHeight()/2
 function graphics.draw()
 	local n = 70 * math.sqrt(graphics.zoom)
-	love.graphics.print(love.timer.getFPS(), 20, 10)
 	love.graphics.push()
 	love.graphics.translate(w, h)
 	love.graphics.scale(graphics.zoom, -graphics.zoom)
