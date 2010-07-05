@@ -346,7 +346,11 @@ function ui.drawlist(list, info)
 		love.graphics.setColor(70,70,70)
 		love.graphics.roundrect('fill', 780, 20, 15, 560, 5,5)
 		love.graphics.roundrect('line', 780, 20, 15, 560, 5,5)
-		love.graphics.setColor(200,200,200)
+		if info.scrolling then
+			love.graphics.setColor(255,255,255)
+		else
+			love.graphics.setColor(180,180,180)
+		end
 		love.graphics.roundrect('fill', 780, 20+info.scrolly, 15, 40, 5, 5)
 		love.graphics.roundrect('line', 780, 20+info.scrolly, 15, 40, 5, 5)
 	end

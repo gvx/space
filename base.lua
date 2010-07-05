@@ -1,4 +1,4 @@
-base = {buyship = {scrolly = 0, maxscrolly = 520, scrolling = false}, mission = {}, trade = {}, talk = {}, visit = {}}
+base = {buyship = {}, mission = {}, trade = {}, talk = {}, visit = {}, info = {scrolly = 0, maxscrolly = 520}}
 registerstate'base_mission'
 registerstate'base_trade'
 registerstate'base_buyship'
@@ -9,32 +9,29 @@ function base.load()
 end
 
 function base.update(dt)
-	if state.current == 'base_mission' then
-	elseif state.current == 'base_buyship' then
-		local x, y = love.mouse.getPosition()
-		if love.mouse.isDown'l' then
-			if x >= 780 and x <= 790 then
-				base.buyship.scrolling = true
-			end
-		else
-			base.buyship.scrolling = false
+	local x, y = love.mouse.getPosition()
+	if love.mouse.isDown'l' then
+		if x >= 780 and x <= 790 then
+			base.info.scrolling = true
 		end
-		if base.buyship.scrolling  then
-			if y >= 20 and y <= 580 then
-				base.buyship.scrolly = math.max(math.min(y - 40, base.buyship.maxscrolly), 0)
-			end
+	else
+		base.info.scrolling = false
+	end
+	if base.info.scrolling  then
+		if y >= 20 and y <= 580 then
+			base.info.scrolly = math.max(math.min(y - 40, base.info.maxscrolly), 0)
 		end
 	end
 end
 
 function base.draw()
 	if state.current == 'base_mission' then
-		ui.drawlist(base.mission.displist, base.mission.info)
+		ui.drawlist(base.mission.displist, base.info)
 	elseif state.current == 'base_trade' then
 		love.graphics.print('There is nothing to trade at the moment. Come back later.', 20, 20)
 		love.graphics.print('(maybe next version ;)', 20, 40)
 	elseif state.current == 'base_buyship' then
-		ui.drawlist(base.buyship.displist, base.buyship)
+		ui.drawlist(base.buyship.displist, base.info)
 	elseif state.current == 'base_talk' then
 		love.graphics.print('There is no talking to do at the moment. Come back later.', 20, 20)
 		love.graphics.print('(maybe next version ;)', 20, 40)
@@ -64,7 +61,7 @@ function base.mission.init()
 	for i=1,#l do
 		table.insert(dl, {name = officialnames[l[i].commissionedby], description = l[i].name})
 	end
-	base.mission.info = {scrolly = 0, maxscrolly = 520}
+	base.info.scrolly = 0
 end
 
 function base.buyship.init()
@@ -73,6 +70,7 @@ function base.buyship.init()
 	for i, v in ipairs(player.landed.shipsselling) do
 		table.insert(dl, {name = '', description = ships[v].description})
 	end
+	base.info.scrolly = 0
 end
 
 function states.base_mission.keypressed.escape()
