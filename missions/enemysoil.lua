@@ -18,6 +18,7 @@ Congrats, you made it.
 			if player.landed.owner == 'd' then
 				mission.mission.completed = true
 				table.remove(hook.hooks.enterbase, i)
+				mission.update()
 			end
 		end)
 		i = #hook.hooks.enterbase
