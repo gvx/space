@@ -1,7 +1,7 @@
 -- based on thelinx's Public Domain UaLove hook system
 hook = {hooks = {}}
 
-function hook.add(event, func, id)
+function hook.add(event, func)
 	hook.hooks[event] = hook.hooks[event] or {}
 	table.insert(hook.hooks[event], func)
 end
