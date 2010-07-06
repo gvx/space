@@ -77,12 +77,28 @@ function states.base_mission.keypressed.escape()
 	state.current = 'base'
 end
 function states.base_mission.keypressed.enter()
-	if not mission.mission or mission.mission.canrefuse then
+	if not mission.mission or mission.mission.canrefuse and #base.mission.list > 0 then
 		mission.newmission = base.mission.list[1]
 		love.graphics.setFont(mediumfont)
 		state.current = 'mission'
 	end
 end
+states.base_mission.keypressed['1'] = states.base_mission.keypressed.enter
+states.base_mission.keypressed['2'] = function ()
+	if not mission.mission or mission.mission.canrefuse and #base.mission.list > 2 then
+		mission.newmission = base.mission.list[2]
+		love.graphics.setFont(mediumfont)
+		state.current = 'mission'
+	end
+end
+states.base_mission.keypressed['3'] = function ()
+	if not mission.mission or mission.mission.canrefuse and #base.mission.list > 3 then
+		mission.newmission = base.mission.list[3]
+		love.graphics.setFont(mediumfont)
+		state.current = 'mission'
+	end
+end
+
 states.base_trade.keypressed.escape = states.base_mission.keypressed.escape
 states.base_buyship.keypressed.escape = states.base_mission.keypressed.escape
 states.base_talk.keypressed.escape = states.base_mission.keypressed.escape
