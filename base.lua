@@ -10,7 +10,8 @@ end
 
 function base.update(dt)
 	local x, y = love.mouse.getPosition()
-	if love.mouse.isDown'l' then
+	local mouseDown = love.mouse.isDown'l'
+	if mouseDown then
 		if x >= 780 and x <= 790 then
 			base.info.scrolling = true
 		end
@@ -22,22 +23,38 @@ function base.update(dt)
 			base.info.scrolly = math.max(math.min(y - 40, base.info.maxscrolly), 0)
 		end
 	end
+	base.info.selected = nil
+	if x > 20 and x < 720 then
+		local sy = y + math.max(0,#base.displist-4)*150 * base.info.scrolly / base.info.maxscrolly
+		if (sy-20) % 150 < 120 then
+			base.info.selected = math.ceil(sy / 150)
+			if mouseDown then
+				base.info.activate(base.info.selected)
+			end
+		end
+	end
 end
 
 function base.draw()
-	if state.current == 'base_mission' then
-		ui.drawlist(base.mission.displist, base.info)
-	elseif state.current == 'base_trade' then
+	if state.current == 'base_trade' then
 		love.graphics.print('There is nothing to trade at the moment. Come back later.', 20, 20)
 		love.graphics.print('(maybe next version ;)', 20, 40)
-	elseif state.current == 'base_buyship' then
-		ui.drawlist(base.buyship.displist, base.info)
 	elseif state.current == 'base_talk' then
 		love.graphics.print('There is no talking to do at the moment. Come back later.', 20, 20)
 		love.graphics.print('(maybe next version ;)', 20, 40)
 	elseif state.current == 'base_visit' then
 		love.graphics.print('There is nothing to visit at the moment. Come back later.', 20, 20)
 		love.graphics.print('(maybe next version ;)', 20, 40)
+	else
+		ui.drawlist(base.displist, base.info)
+	end
+end
+
+function base.mission.activate(i)
+	if not mission.mission or mission.mission.canrefuse and #base.mission.list > 0 then
+		mission.newmission = base.mission.list[i]
+		love.graphics.setFont(mediumfont)
+		state.current = 'mission'
 	end
 end
 
@@ -56,21 +73,27 @@ function base.mission.init()
 			l[i] = nil
 		end
 	end
-	base.mission.displist = {}
-	local dl = base.mission.displist
+	base.displist = {}
+	local dl = base.displist
 	for i=1,#l do
 		table.insert(dl, {name = officialnames[l[i].commissionedby], description = l[i].name})
 	end
 	base.info.scrolly = 0
+	base.info.activate = base.mission.activate
+end
+
+function base.buyship.activate()
+	-- buy a ship, yes pretty useless at this point
 end
 
 function base.buyship.init()
 	local dl = {}
-	base.buyship.displist = dl
+	base.displist = dl
 	for i, v in ipairs(player.landed.shipsselling) do
 		table.insert(dl, {name = '', description = ships[v].description})
 	end
 	base.info.scrolly = 0
+	base.info.activate = base.buyship.activate
 end
 
 function states.base_mission.keypressed.escape()
