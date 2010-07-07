@@ -9,11 +9,11 @@ function ships.load()
 	ships.bettervessel = {mass = 105, hull = 180, acc = 10, rot=.7, revengine = 1, attack = 5, cargospace = 150, size = 35, vector = 'vessel'}
 	ships.betterfighter = {mass = 20, hull = 45, acc = 55, rot=2.1, revengine = 2.1, attack = 100, cargospace = 1, size = 18, vector = 'medium_fighter'}
 	ships.betterbomber = {mass = 100, hull = 150, acc = 20, rot=.7, revengine = 1, attack = 200, cargospace = 15, size = 30, vector = 'light_bomber'}
-	ships.betterspeeder = {mass = 25, hull = 25, acc = 110, rot=3, revengine = 5, attack = 3, cargospace = 1, size = 19, vector = 'speeder'}
+	ships.betterspeeder = {mass = 25, hull = 25, acc = 110, rot=3, revengine = 5, attack = 3, cargospace = 1, size = 65, vector = 'speeder'}
 	ships.supervessel = {mass = 125, hull = 190, acc = 15, rot=.8, revengine = 1.1, attack = 10, cargospace = 250, size = 40, vector = 'vessel'}
 	ships.superfighter = {mass = 25, hull = 50, acc = 70, rot=2.5, revengine = 2.5, attack = 150, cargospace = 2, size = 19, vector = 'medium_fighter'}
 	ships.superbomber = {mass = 120, hull = 200, acc = 25, rot=.8, revengine = 1.1, attack = 400, cargospace = 10, size = 35, vector = 'light_bomber'}
-	ships.superspeeder = {mass = 20, hull = 20, acc = 200, rot=5, revengine = 7, attack = 2, cargospace = 1, size = 18, vector = 'speeder'}
+	ships.superspeeder = {mass = 20, hull = 20, acc = 200, rot=5, revengine = 7, attack = 2, cargospace = 1, size = 60, vector = 'speeder'}
 	
 	ships.beginner.description = 'Beginners\' ship.\n\nA smallish ship. Not very noteworthy.'
 	ships.vessel.description = 'Vessel\n\nA large spaceship, with plenty of cargo space. Not very fast, and practically defenceless in battle.'
