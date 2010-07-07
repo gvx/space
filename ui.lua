@@ -98,7 +98,7 @@ function love.mousepressed(x,y,button) --oh god this can't be right
 				zoomout(3)
 			end
 		end
-	elseif state.current == 'base_buyship' then
+	elseif state.current:sub(1,4) == 'base' then
 		if button == 'wu' then
 			base.info.scrolly = math.max(math.min(base.info.scrolly - 20, base.info.maxscrolly),0)
 		elseif button == 'wd' then
