@@ -41,6 +41,24 @@ function map.new()
 	map.objects.hostilebase = {type='base', owner='d', x = s2p(200), y = s2p(200), radius = 300, landingstripangle = math.random()*2*math.pi, name='Darzamin capital', shipsselling = {}}
 	map.objects.blackhole = {type='black hole', x = 0, y = 0, radius = 7000}
 	map.objectreserve = {package = {type='special', name='A curious package', weight=1}}
+	map.raster = {}
+	local r = {}
+	local r_mt = {__index= function () return r end }
+	
+	for k,v in pairs(map.objects) do
+		if v.type == 'planet' or v.type == 'base' then
+			local X = math.floor(v.x*.001)
+			local Y = math.floor(v.y*.001)
+			if not map.raster[X] then
+				map.raster[X] = setmetatable({}, r_mt)
+			end
+			if not rawget(map.raster[X], Y) then
+				map.raster[X][Y] = {}
+			end
+			table.insert(map.raster[X][Y], v)
+		end
+	end
+	setmetatable(map.raster, r_mt)
 end
 
 function map.update(dt)
