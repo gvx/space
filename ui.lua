@@ -100,9 +100,9 @@ function love.mousepressed(x,y,button) --oh god this can't be right
 		end
 	elseif state.current == 'base_buyship' then
 		if button == 'wu' then
-			base.buyship.scrolly = math.max(math.min(base.buyship.scrolly - 4, base.buyship.maxscrolly),0)
+			base.info.scrolly = math.max(math.min(base.info.scrolly - 20, base.info.maxscrolly),0)
 		elseif button == 'wd' then
-			base.buyship.scrolly = math.max(math.min(base.buyship.scrolly + 4, base.buyship.maxscrolly),0)
+			base.info.scrolly = math.max(math.min(base.info.scrolly + 20, base.info.maxscrolly),0)
 		end
 	end
 end
