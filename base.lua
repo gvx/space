@@ -62,7 +62,7 @@ function base.mission.init()
 	base.mission.list = {}
 	local l = base.mission.list
 	for k,v in pairs(mission.list) do
-		if not v.completed and v.available() then
+		if not v.completed and v.available() and v ~= mission.mission then
 			v.randomid = math.random() --used for sorting
 			table.insert(l, v)
 		end
