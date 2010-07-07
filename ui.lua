@@ -332,11 +332,28 @@ end
 
 function ui.drawlist(list, info)
 	local dispos = math.max(0,#list-4)*150 * info.scrolly / info.maxscrolly
+	local mx = love.mouse.getX()
+	local my = love.mouse.getY()
+	local sel
+	if mx > 20 and mx < 720 then
+		local sy = my + dispos
+		if (sy-20) % 150 < 120 then
+			sel = math.ceil(sy / 150)
+		end
+	end
 	for i,item in ipairs(list) do
-		love.graphics.setColor(25,25,25)
+		if i==sel then
+			love.graphics.setColor(80,80,80)
+		else
+			love.graphics.setColor(25,25,25)
+		end
 		love.graphics.roundrect('fill', 20, 20 + i * 150 - 150 - dispos, 700, 120, 20, 20)
 		love.graphics.setColor(255,255,255)
-		love.graphics.setLineWidth(3)
+		if i==sel then
+			love.graphics.setLineWidth(4)
+		else
+			love.graphics.setLineWidth(3)
+		end
 		love.graphics.roundrect('line', 20, 20 + i * 150 - 150 - dispos, 700, 120, 20, 20)
 		--graphics.drawshape(graphics.vector[ships[ship].vector], 80, 20 + i * 150 - 150 + 60 - dispos, math.min(ships[ship].size, 15), 0) --?
 		love.graphics.print(item.name, 140, 20 + i * 150 - 150 + 20)
