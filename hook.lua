@@ -8,9 +8,15 @@ end
 
 function hook.call(event, ...)
 	if not hook.hooks[event] then return end
-	for i=1,#hook.hooks[event] do
-		if hook.hooks[event][i](...) then
+	local i = 1
+	while i <= #hook.hooks[event] do
+		local r = hook.hooks[event][i](...)
+		if r == 'remove' then
+			table.remove(hook.hooks[event], i)
+		elseif r then
 			break
+		else
+			i = i + 1
 		end
 	end
 end

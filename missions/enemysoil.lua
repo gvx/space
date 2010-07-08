@@ -13,15 +13,16 @@ Congrats, you made it.
 		return player.rank < 3 and player.landed.owner == 'a'
 	end,
 	accept = function()
-		local i
-		hook.add('enterbase', function()
+		mission.mission.i = hook.add('visitbase', function()
+			if not mission.mission or mission.mission.id ~= 'enemysoil' then
+				return table.remove(hook.hooks.visitbase, mission.list.enemysoil.i)
+			end
 			if player.landed.owner == 'd' then
 				mission.mission.completed = true
-				table.remove(hook.hooks.enterbase, i)
+				table.remove(hook.hooks.visitbase, mission.mission.i)
 				mission.update()
 			end
 		end)
-		i = #hook.hooks.enterbase
 	end,
 	checkcompleted = function()
 		return mission.mission.completed -- cheap trick
