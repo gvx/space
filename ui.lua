@@ -164,6 +164,17 @@ function ui.draw()
 				love.graphics.print(map.objectreserve[player.ship.cargo[i]].name, 40, 136 + 20 * i)
 			end
 		end
+		if ui.showcargoitem then
+			love.graphics.setColor(0,0,0,90)
+			love.graphics.rectangle('fill', 36, 120, 500, 200)
+			local citem = map.objectreserve[player.ship.cargo[ui.showcargoindex]]
+			love.graphics.setColor(255,255,255,90)
+			love.graphics.rectangle('fill', 36, 120, smallfont:getWidth(citem.name)+8, 22)
+			love.graphics.setColor(255,255,255)
+			love.graphics.print(citem.name, 40, 136)
+			--love.graphics.print(citem.description, 40, 156)
+			love.graphics.print('Weight: '..citem.weight, 40, 156)
+		end
 	end
 	if ui.cmdstring then
 		love.graphics.setColor(0,0,0,90)
@@ -286,7 +297,8 @@ function states.game.keypressed.escape()
 end
 
 function states.game.keypressed.c()
-	ui.showcargo = not ui.showcargo
+	ui.showcargo = not (ui.showcargo or ui.showcargoitem)
+	ui.showcargoitem = false
 end
 
 function states.game.keypressed.j()
@@ -298,6 +310,23 @@ end
 function states.game.keypressed.k()
 	if ui.showcargo and #player.ship.cargo > 0 then
 		ui.showcargoindex = (ui.showcargoindex-2) % #player.ship.cargo + 1
+	end
+end
+
+function states.game.keypressed.l()
+	if ui.showcargo and #player.ship.cargo > 0 then
+		ui.showcargo = false
+		ui.showcargoitem = true
+		if ui.showcargoindex > #player.ship.cargo then
+			ui.showcargoindex = #player.ship.cargo
+		end
+	end
+end
+
+function states.game.keypressed.h()
+	if ui.showcargoitem then
+		ui.showcargo = true
+		ui.showcargoitem = false
 	end
 end
 
