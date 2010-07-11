@@ -16,6 +16,8 @@ function help.load()
 			{'B', 'Automatic braking'},
 			{'C', 'Toggle cargo view'},
 			{'J/K', 'Go through cargo list'},
+			{'L', 'Select cargo item'},
+			{'H', 'Go back to cargo list'},
 			{'P', 'Pause'},
 			{'PgUp', 'Zoom in'},
 			{'PgDown', 'Zoom out'},
