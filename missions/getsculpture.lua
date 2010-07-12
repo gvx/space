@@ -25,7 +25,12 @@ It is your job to go to the Bzadorian capital and request the sculpture back in 
 			if player.landed == map.objects.friendbase then
 				table.insert(player.ship.cargo, 'sculpture')
 				table.remove(hook.hooks.visitbase, mission.mission.i)
-				-- should probably show a message here somewhere
+				love.graphics.setFont(mediumfont)
+				mission.animx = 0
+				mission.text = 'Here is the sculpture. Go bring it to your capital.'
+				mission.tagline = 'Press Enter to continue'
+				mission.closescreen = mission.close_screen
+				state.current = 'mission_screen'
 			end
 		end)
 	end,
