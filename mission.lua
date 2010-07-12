@@ -1,6 +1,7 @@
 mission = {}
 registerstate'mission'
 registerstate'mission_debrief'
+registerstate'mission_screen'
 
 function mission.load()
 	mission.hadfirstmission = false
@@ -39,6 +40,22 @@ function mission.update(dt)
 			state.current = 'mission_debrief'
 		end
 	end
+end
+
+function mission.close_mission()
+	if mission.accepting then
+		mission.mission = mission.newmission
+		if mission.mission.accept then
+			mission.mission.accept()
+		end
+	elseif mission.newmission.refuse then
+		mission.newmission.refuse()
+	end
+	mission.newmission = nil
+end
+
+function mission.close_debrief()
+	mission.mission = nil
 end
 
 function mission.missionupdate(dt)
@@ -89,6 +106,34 @@ function mission.mission_debriefupdate(dt)
 	end
 end
 
+function mission.updatescreen(dt)
+	if not mission.finishedanim then
+		mission.animx = mission.animx + dt*2
+		if mission.animx > .5 then
+			mission.finishedanim = true
+		end
+	end
+	if mission.closing then
+		mission.animx = mission.animx + dt*6
+		if mission.animx > 2.55 then
+			mission.animx = 0
+			mission.finishedanim = nil
+			love.graphics.setFont(smallfont)
+			state.current = 'game'
+			mission.closing = false
+			mission.closescreen()
+		end
+	end
+end
+
+function mission.drawscreen()
+	love.graphics.setColor(255,255,255)
+	love.graphics.printf(mission.text, 40, 50, 720)
+	love.graphics.print(mission.tagline, 40, 560)
+	love.graphics.setColor(255,255,255,mission.animx*100)
+	love.graphics.rectangle('fill', 0, 535, 800, 40)
+end
+
 function mission.missiondraw()
 	love.graphics.setColor(255,255,255)
 	love.graphics.printf(mission.newmission.description, 40, 50, 720)
@@ -117,5 +162,9 @@ function states.mission.keypressed.enter()
 end
 
 function states.mission_debrief.keypressed.enter()
+	mission.closing = true
+end
+
+function states.mission_screen.keypressed.enter()
 	mission.closing = true
 end
