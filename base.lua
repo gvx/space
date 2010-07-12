@@ -53,6 +53,9 @@ end
 function base.mission.activate(i)
 	if not mission.mission or mission.mission.canrefuse and #base.mission.list > 0 then
 		mission.newmission = base.mission.list[i]
+		mission.text = mission.newmission.description
+		mission.tagline = mission.newmission.canrefuse and 'Press Enter to accept or Escape to refuse.' or 'Press Enter or Escape to accept.'
+		mission.closescreen = mission.close_mission
 		love.graphics.setFont(mediumfont)
 		state.current = 'mission'
 	end

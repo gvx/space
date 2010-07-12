@@ -84,14 +84,11 @@ function love.update(dt)
 	elseif state.current == 'base' then
 		ui.base.update(dt)
 		love.timer.sleep(20)
-	elseif state.current == 'mission' then
-		mission.missionupdate(dt)
-		love.timer.sleep(20)
-	elseif state.current == 'mission_debrief' then
-		mission.mission_debriefupdate(dt)
-		love.timer.sleep(20)
 	elseif state.current == 'help' then
 		help.update(dt)
+		love.timer.sleep(20)
+	elseif state.current:sub(1,7) == 'mission' then
+		mission.updatescreen(dt)
 		love.timer.sleep(20)
 	elseif state.current:sub(1,4) == 'base' then
 		base.update(dt)
@@ -120,10 +117,8 @@ function love.draw()
 		ui.drawbase()
 	elseif state.current == 'mainmenu' then
 		mainmenu.draw()
-	elseif state.current == 'mission' then
-		mission.missiondraw()
-	elseif state.current == 'mission_debrief' then
-		mission.mission_debriefdraw()
+	elseif state.current:sub(1,7) == 'mission' then
+		mission.drawscreen()
 	elseif state.current:sub(1,4) == 'base' then
 		base.draw()
 	elseif state.current:sub(1,8) == 'mainmenu' then

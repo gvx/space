@@ -26,6 +26,9 @@ function mission.update(dt)
 		mission.hadfirstmission = true
 		mission.newmission = mission.list.first
 		love.graphics.setFont(mediumfont)
+		mission.text = mission.newmission.description
+		mission.tagline = mission.newmission.canrefuse and 'Press Enter to accept or Escape to refuse.' or 'Press Enter or Escape to accept.'
+		mission.closescreen = mission.close_mission
 		state.current = 'mission'
 		return
 	end
@@ -37,6 +40,9 @@ function mission.update(dt)
 			mission.total = mission.total + 1
 			love.graphics.setFont(mediumfont)
 			mission.animx = 0
+			mission.text = mission.mission.debrief
+			mission.tagline = 'Press Enter to continue'
+			mission.closescreen = mission.close_debrief
 			state.current = 'mission_debrief'
 		end
 	end
@@ -58,52 +64,7 @@ function mission.close_debrief()
 	mission.mission = nil
 end
 
-function mission.missionupdate(dt)
-	if not mission.finishedanim then
-		mission.animx = mission.animx + dt*2
-		if mission.animx > .5 then
-			mission.finishedanim = true
-		end
-	end
-	if mission.closing then
-		mission.animx = mission.animx + dt*6
-		if mission.animx > 2.55 then
-			if mission.accepting then
-				mission.mission = mission.newmission
-				if mission.mission.accept then
-					mission.mission.accept()
-				end
-			elseif mission.newmission.refuse then
-				mission.newmission.refuse()
-			end
-			mission.newmission = nil
-			mission.animx = 0
-			mission.finishedanim = nil
-			love.graphics.setFont(smallfont)
-			state.current = 'game'
-			mission.closing = false
-		end
-	end
-end
-
-function mission.mission_debriefupdate(dt)
-	if not mission.finishedanim then
-		mission.animx = mission.animx + dt*2
-		if mission.animx > .5 then
-			mission.finishedanim = true
-		end
-	end
-	if mission.closing then
-		mission.animx = mission.animx + dt*6
-		if mission.animx > 2.55 then
-			mission.animx = 0
-			mission.finishedanim = nil
-			mission.mission = nil
-			love.graphics.setFont(smallfont)
-			state.current = 'game'
-			mission.closing = false
-		end
-	end
+function mission.close_screen()
 end
 
 function mission.updatescreen(dt)
@@ -133,23 +94,6 @@ function mission.drawscreen()
 	love.graphics.setColor(255,255,255,mission.animx*100)
 	love.graphics.rectangle('fill', 0, 535, 800, 40)
 end
-
-function mission.missiondraw()
-	love.graphics.setColor(255,255,255)
-	love.graphics.printf(mission.newmission.description, 40, 50, 720)
-	love.graphics.print(mission.newmission.canrefuse and 'Press Enter to accept or Escape to refuse.' or 'Press Enter or Escape to accept.', 40, 560)
-	love.graphics.setColor(255,255,255,mission.animx*100)
-	love.graphics.rectangle('fill', 0, 535, 800, 40)
-end
-
-function mission.mission_debriefdraw()
-	love.graphics.setColor(255,255,255)
-	love.graphics.printf(mission.mission.debrief, 40, 50, 720)
-	love.graphics.print('Press Enter to continue.', 40, 560)
-	love.graphics.setColor(255,255,255,mission.animx*100)
-	love.graphics.rectangle('fill', 0, 535, 800, 40)
-end
-
 
 function states.mission.keypressed.escape()
 	mission.accepting = not mission.newmission.canrefuse
