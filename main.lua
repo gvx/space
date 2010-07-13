@@ -134,3 +134,78 @@ function love.keypressed(key, unicode)
 		states[state.current].keypressed.other(key, unicode)
 	end
 end
+
+local function error_printer(msg, layer)
+	print((debug.traceback("Error: " .. msg, 1+(layer or 1)):gsub("\n[^\n]+$", "")))
+end
+
+function love.errhand(msg)
+
+	error_printer(msg, 2)
+
+	-- Load.
+	love.graphics.setScissor()
+
+	love.graphics.setColor(255, 255, 255, 255)
+
+	local trace = debug.traceback()
+
+	love.graphics.clear()
+
+	local err = {}
+
+	for l in string.gmatch(trace, "(.-)\n") do
+		if not string.match(l, "boot.lua") then
+			l = string.gsub(l, "stack traceback:", "Traceback\n")
+			table.insert(err, l)
+		end
+	end
+
+	local p = table.concat(err, "\n")
+
+	p = string.gsub(p, "\t", "")
+	p = string.gsub(p, "%[string \"(.-)\"%]", "%1")
+
+	local wi = love.graphics.getWidth() - 140
+	address = 'github.com/gvx/space/issues'
+	local wa = love.graphics.getWidth() - largefont:getWidth(address) - 20
+	local ha = love.graphics.getHeight() - 20
+
+	local function draw()
+		love.graphics.clear()
+		love.graphics.setFont(largefont)
+		love.graphics.print('Oops! Something went wrong.', 20, 35)
+		love.graphics.print(address, wa, ha)
+		love.graphics.setFont(mediumfont)
+		if showtrace then
+			love.graphics.printf(p, 70, 120, wi)
+		else
+			love.graphics.printf('An error occurred. It would be great if you want to file a bug report. To do that, please visit github.com/gvx/space/issues. First check if this bug has not been fixed already. If you have no terminal with the traceback of the error, press space. To quit, press escape.', 70, 120, wi)
+		end
+		love.graphics.present()
+	end
+
+	draw()
+
+	local e, a, b, c
+	while true do
+		e, a, b, c = love.event.wait()
+
+		if e == "q" then
+			return
+		end
+		if e == "kp" then
+			if a == "escape" then
+				return
+			elseif a == ' ' then
+				showtrace = not showtrace
+			end
+		end
+
+		draw()
+
+		love.timer.sleep(25)
+
+	end
+
+end
