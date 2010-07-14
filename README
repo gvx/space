@@ -2,7 +2,16 @@ A space shooter. IN SPACE.
 
 You will need LÖVE (http://love2d.org/) to play this thing.
 
-For players: this isn't even close to beta. So no detailed guide on how to play this. Sorry.
+For players:
+This game isn't finished yet, so not everything is polished (or finished, for
+that matter). If and when you find any bugs, please be so kind to file a bug
+report at http://github.com/gvx/space/issues.
+Most controls are what you expect. Up/Left/Right/W/A/D, Return and Escape
+especially. Holding Shift enables the turbo boost, and PageUp and PageDown
+(and the scrollwheel) are used for zooming. P is to pause the game.
+Things to try out would be S, Tab (*especially* Tab), N, M, C, (and after
+pressing C: J, K, H, L), F1 (which has a bit of explanation about the keys.
+In closing: have fun, Turbo Is Your Friend, and WATCH OUT FOR THE BLACK HOLE!
 
 Credits:
 Most of the programming and artwork is made by Robin Wellner, also known as gvx.
