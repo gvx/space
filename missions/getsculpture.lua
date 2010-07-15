@@ -5,9 +5,9 @@ return {
 	description = [[
 Hey, sport.
 
-The Bzadorian Cultural Historic Museum has borrowed a classic sculpture from our empire. They would return it some time ago.
+The $b$n Cultural Historic Museum has borrowed a classic sculpture from our empire. They would return it some time ago.
 
-It is your job to go to the Bzadorian capital and request the sculpture back in time. If you don't manage to do so within time, our lose the sculpture under way...
+It is your job to go to the $b$n capital and request the sculpture back in time. If you don't manage to do so within time, our lose the sculpture under way...
 ]],
 	debrief = [[
 <cheesy remark>
