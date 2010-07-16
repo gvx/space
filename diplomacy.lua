@@ -6,15 +6,16 @@ diplomacy = {}
 -- anything above 20 is stable
 -- anything above 50 is friendly
 
+local abs = math.abs
 function diplomacy.getplayerrelation(entity)
-	local n = mission.commissions[entity]
+	local n = mission.commissions[entity] * 100
 	for k,v in pairs(diplomacy.relation) do
 		if v[entity] then
-			n = n + mission.commissions[k] * v[entity]^2 / 100
+			n = n + mission.commissions[k] * v[entity]*abs(v[entity]) * .01
 		end
 	end
 	for k,v in pairs(diplomacy.relation[entity]) do
-		n = n + mission.commissions[k] * v^2 / 100
+		n = n + mission.commissions[k] * v*abs(v) * .01
 	end
 	return n / mission.total
 end
