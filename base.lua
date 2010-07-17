@@ -130,6 +130,18 @@ states.base_buyship.keypressed.escape = states.base_mission.keypressed.escape
 states.base_talk.keypressed.escape = states.base_mission.keypressed.escape
 states.base_visit.keypressed.escape = states.base_mission.keypressed.escape
 
+function base.talk.init()
+	love.graphics.setFont(mediumfont)
+	conv.speakers = {player.landed.owner}
+	table.insert(conv.speakers, math.random(1,2), 'player')
+	conv[1] = {1, 'Hello.'}
+	conv[2] = {2, 'Hey, how are you doing?'}
+	conv[3] = {1, 'Great, how about you?'}
+	conv[4] = {2, 'Fine, absolutely fine.'}
+	conv.index = 1
+	state.current = 'conv'
+end
+
 function base.visit.init()
 	hook.call('visitbase', player.landed)
 end

@@ -12,7 +12,8 @@ states = {}
 officialnames = {spacecorp = 'SpaceCorp', a = 'Amania', b = 'Bzadoria',
 	c = 'Cadadonia', d = 'Darzamin', ar = 'Anarchists',
 	br = 'Fighters for the Common Good', cr = 'Eclectic Monkeys',
-	dr = 'Alliance of Oppressed People', dem = 'Deus Ex Machines'}
+	dr = 'Alliance of Oppressed People', dem = 'Deus Ex Machines',
+	player = 'You'}
 
 function registerstate(name)
 	states[name] = {}
@@ -36,6 +37,7 @@ function love.load()
 	require "mission"
 	require "diplomacy"
 	require "help"
+	require "conv"
 	
 	smallfont = love.graphics.newFont('gemfontone.ttf', 16)
 	largefont = love.graphics.newFont('gemfontone.ttf', 30)
@@ -57,6 +59,7 @@ function restart()
 	base.load()
 	mission.load()
 	help.load()
+	conv.load()
 end
 
 function love.update(dt)
@@ -86,6 +89,9 @@ function love.update(dt)
 		love.timer.sleep(20)
 	elseif state.current == 'help' then
 		help.update(dt)
+		love.timer.sleep(20)
+	elseif state.current == 'conv' then
+		conv.update(dt)
 		love.timer.sleep(20)
 	elseif state.current:sub(1,7) == 'mission' then
 		mission.updatescreen(dt)
@@ -117,6 +123,8 @@ function love.draw()
 		ui.drawbase()
 	elseif state.current == 'mainmenu' then
 		mainmenu.draw()
+	elseif state.current == 'conv' then
+		conv.draw()
 	elseif state.current:sub(1,7) == 'mission' then
 		mission.drawscreen()
 	elseif state.current:sub(1,4) == 'base' then
