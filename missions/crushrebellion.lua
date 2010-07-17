@@ -13,13 +13,13 @@ Of course, there is a reward. Not only an improved reputation with our governmen
 You have nowhere to go. You have two choices: getting defeated by our forces, or joining our cause by destroying a small $b$n outpost nearby. We can't do anything about it ourselves, because they'd ask for backup as soon as they would spot us. But they wouldn't expect you to do something like that.
 
 So what do you say? Which fate do you prefer? Do you accept our offer or not?
-]]
+]],
 	debrief = [[
 Thank you for exterminating those pests. Here is your reward. 
 ]],
 	altdebrief = [[
 Thank you for helping us oppose those evil oppressors. We have not much to reward you with, but you can always count on us if you're in trouble, on account of $b or otherwise.
-]]
+]],
 	canrefuse=true,
 	available = function()
 		return player.rank > 2 and player.rank < 6
