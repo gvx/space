@@ -177,8 +177,8 @@ function ui.draw()
 		end
 	end
 	if ui.cmdstring then
-		love.graphics.setColor(0,0,0,90)
-		love.graphics.rectangle('fill', 398, 24, 200, 20)
+		love.graphics.setColor(20,20,20,180)
+		love.graphics.rectangle('fill', 0, 0, 800, 600)
 		love.graphics.setColor(255,255,255)
 		love.graphics.print(':'..ui.cmdstring, 400, 38)
 	end

@@ -64,17 +64,19 @@ end
 
 function love.update(dt)
 	if state.current == 'game' then
-		state.frame = state.frame + 1
-		state.totaltime = state.totaltime + dt
-		
-		mission.update(dt)
-		map.update(dt)
-		ui.update(dt)
-		player.update(dt)
-		ai.update(dt)
-		ships.update(dt)
-		physics.update(dt)
-		graphics.update(dt)
+		if not ui.cmdstring then
+			state.frame = state.frame + 1
+			state.totaltime = state.totaltime + dt
+			
+			mission.update(dt)
+			map.update(dt)
+			ui.update(dt)
+			player.update(dt)
+			ai.update(dt)
+			ships.update(dt)
+			physics.update(dt)
+			graphics.update(dt)
+		end
 		love.timer.sleep(10)
 	elseif state.current == 'paused' then
 		state.frame = state.frame + 1
