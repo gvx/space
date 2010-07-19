@@ -16,7 +16,7 @@ function ai.approach(ship, targetx, targety, dt)
 	local braking_distance = .5 * v^2 / ship.ship.acc
 	local time_to_rotate = abs(pi - a2) / ship.ship.rot
 	local maxspeed = ship.hyperspeed and 1600 or 800
-	if d <= braking_distance + time_to_rotate * v then
+	if d <= braking_distance + time_to_rotate * v * 2 then
 		--slow down
 		if a2 > pi+.2 then
 			ship.angle = ship.angle - rot
