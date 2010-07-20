@@ -43,6 +43,7 @@ function map.new()
 	map.objectreserve = {
 		package = {type='special', name='A curious package', weight=1},
 		sculpture = {type='special', name='A classic sculpture', weight=5},
+		loot = {type='special', name='You are afraid to see what it is', weight=3},
 	}
 	map.raster = {}
 	local r = {}
