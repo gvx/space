@@ -20,7 +20,7 @@ It is your job to go to the $b$n capital and request the sculpture back in time.
 	accept = function()
 		mission.mission.i = hook.add('visitbase', function()
 			if not mission.mission or mission.mission.id ~= 'getsculpture' then
-				return table.remove(hook.hooks.visitbase, mission.list.enemysoil.i)
+				return table.remove(hook.hooks.visitbase, mission.list.getsculpture.i)
 			end
 			if player.landed == map.objects.friendbase then
 				table.insert(player.ship.cargo, 'sculpture')
