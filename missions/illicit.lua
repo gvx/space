@@ -31,7 +31,8 @@ Very well. Just remember: I was not involved here. This mission never even exist
 				mission.closescreen = mission.close_screen
 				state.current = 'mission_screen'
 			end
-		end),
+		end)
+	end,
 	checkcompleted = function()
 		if player.landed == map.objects.homebase then
 			for i=1,#player.ship.cargo do
