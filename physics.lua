@@ -8,7 +8,6 @@ local p = math.pi
 local sqrt, atan2, cos, sin, abs = math.sqrt, math.atan2, math.cos, math.sin, math.abs
 local floor = math.floor
 function gravitate(ship, dt)
-	ship.spaghetti_amount = false
 	local X = floor(ship.x*.001)
 	local Y = floor(ship.y*.001)
 	for I=-1,1 do
@@ -64,10 +63,6 @@ function gravitate(ship, dt)
 			ship.dx = ship.dx - a*cos(angle)*dt
 			ship.dy = ship.dy - a*sin(angle)*dt
 			if ship==player then state.shaking = object.radius*10/d end
-			if d < object.radius then
-				ship.spaghetti_angle = angle --not worky :(
-				ship.spaghetti_amount = object.radius/d
-			end
 		end
 	end
 end

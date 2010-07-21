@@ -139,16 +139,7 @@ function graphics.draw()
 					graphics.drawshape(graphics.vector.landingstrip, object.x + object.radius*math.cos(a), object.y + object.radius*math.sin(a), 40, a)
 				end
 			elseif object.type == 'ship' then
-				--[[if object.spaghetti_amount then
-					love.graphics.push()
-					love.graphics.rotate(object.spaghetti_angle)
-					love.graphics.scale(object.spaghetti_amount, 1)
-					love.graphics.rotate(-object.spaghetti_angle)
-				end]]
 				graphics.drawshape(graphics.vector[object.ship.vector], object.x, object.y, object.ship.size, object.angle)
-				--[[if object.spaghetti_amount then
-					love.graphics.pop()
-				end]]
 			elseif object.type == 'black hole' then
 				for i=0,359,5 do
 					local st = ((i*1.43 + state.totaltime) % 10)/10
@@ -160,14 +151,6 @@ function graphics.draw()
 			end
 		end
 	end
-	--[[if player.spaghetti_amount then
-		love.graphics.push()
-		love.graphics.translate(-w, -h)
-		love.graphics.rotate(player.spaghetti_angle)
-		love.graphics.scale(player.spaghetti_amount, 1)
-		love.graphics.rotate(-player.spaghetti_angle)
-		love.graphics.translate(w, h)
-	end]]
 	graphics.drawshape(graphics.vector[player.ship.vector], player.x, player.y, player.ship.size, player.angle)
 	if player.autopilot then
 		local r = 18000/player.ship.acc
@@ -179,8 +162,5 @@ function graphics.draw()
 		love.graphics.line(player.targetx + x1, player.targety + y1, player.targetx - x1, player.targety - y1)
 		love.graphics.line(player.targetx + x2, player.targety + y2, player.targetx - x2, player.targety - y2)
 	end
-	--[[if player.spaghetti_amount then
-		love.graphics.pop()
-	end]]
 	love.graphics.pop()
 end
