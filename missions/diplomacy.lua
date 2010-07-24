@@ -8,10 +8,12 @@ The tensions between $b and $c are rising. If we do not resolve this, it might b
 You have a good standing with both empires. If you would go in our stead, we would be much obliged.
 ]],
 	debrief = [[
+Thank you, for preventing further escalation between $b and $c. Please accept some of the money which would have been used to support the war otherwise.
 ]],
 	canrefuse=true,
 	available = function()
-		return -- player must be on good standing with b and c, b and c must be at war...
+		-- player must be on good standing with b and c, b and c must be at war...
+		return diplomacy.getplayerrelation'b' > 15 and diplomacy.getplayerrelation'c' > 15 and diplomacy.getrelation('b', 'c') < -50
 	end,
 	accept = function()
 	end,
