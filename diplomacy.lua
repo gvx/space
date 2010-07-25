@@ -8,14 +8,14 @@ diplomacy = {}
 
 local abs = math.abs
 function diplomacy.getplayerrelation(entity)
-	local n = mission.commissions[entity] * 100
+	local n = (mission.commissions[entity] or 0) * 100
 	for k,v in pairs(diplomacy.relation) do
 		if v[entity] then
-			n = n + mission.commissions[k] * v[entity]*abs(v[entity]) * .01
+			n = n + (mission.commissions[k] or 0) * v[entity]*abs(v[entity]) * .01
 		end
 	end
 	for k,v in pairs(diplomacy.relation[entity]) do
-		n = n + mission.commissions[k] * v*abs(v) * .01
+		n = n + (mission.commissions[k] or 0) * v*abs(v) * .01
 	end
 	return n / mission.total
 end
