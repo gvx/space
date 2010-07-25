@@ -281,18 +281,20 @@ function states.base.keypressed.left()
 	ui.base.usedmouse = false
 	local nitems = #ui.base.items
 	local s = ((ui.base.selected or 1) - 2) % nitems + 1
-	if ui.base.enabled[s] then
-		ui.base.selected = s
+	while not ui.base.enabled[s] do
+		s = (s - 2) % nitems + 1
 	end
+	ui.base.selected = s
 end
 
 function states.base.keypressed.right()
 	ui.base.usedmouse = false
 	local nitems = #ui.base.items
 	local s = (ui.base.selected or nitems) % nitems + 1
-	if ui.base.enabled[s] then
-		ui.base.selected = s
+	while not ui.base.enabled[s] do
+		s = s % nitems + 1
 	end
+	ui.base.selected = s
 end
 
 function states.base.keypressed.enter()
