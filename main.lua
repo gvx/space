@@ -162,7 +162,7 @@ function love.errhand(msg)
 
 	love.graphics.clear()
 
-	local err = {}
+	local err = {msg}
 
 	for l in string.gmatch(trace, "(.-)\n") do
 		if not string.match(l, "boot.lua") then
