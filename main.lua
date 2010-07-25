@@ -60,6 +60,7 @@ function restart()
 	mission.load()
 	help.load()
 	conv.load()
+	diplomacy.load()
 end
 
 function love.update(dt)
