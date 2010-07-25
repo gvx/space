@@ -3,6 +3,7 @@ ui = {
 	showcargoindex = 1,
 	base = {
 		items = {'Mission', 'Trade', 'Buy a ship', 'Talk', 'Visit'},
+		enabled = {true, true, true, true, true},
 		posses = {x = 20, y = 80, dx = 140, w = 120, h = 120, r = 20},
 		vector = {'arrow', 'trade', 'beginner', 'transmission', 'planet'},
 		states = {'mission', 'trade', 'buyship', 'talk', 'visit'},
@@ -199,7 +200,11 @@ function ui.drawbase()
 			love.graphics.setColor(20, 20, 20)
 		end
 		love.graphics.roundrect('fill', startx, p.y, p.w, p.h, p.r, p.r)
-		love.graphics.setColor(255, 255, 255)
+		if ui.base.enabled[i] then
+			love.graphics.setColor(255, 255, 255)
+		else
+			love.graphics.setColor(128, 128, 128)
+		end
 		if mover then
 			love.graphics.setLineWidth(4)
 		else
@@ -223,11 +228,14 @@ function ui.base.update(dt)
 		--	ui.base.selected = nil
 		--end
 	else
-		ui.base.selected = math.floor((x - p.x)/p.dx)+1
-		ui.base.usedmouse = true
-		if love.mouse.isDown'l' then
-			--change state
-			states.base.keypressed.enter()
+		local s = math.floor((x - p.x)/p.dx)+1
+		if ui.base.enabled[s] then
+			ui.base.selected = s
+			ui.base.usedmouse = true
+			if love.mouse.isDown'l' then
+				--change state
+				states.base.keypressed.enter()
+			end
 		end
 	end
 	for i=1,#ui.base.rot do
@@ -256,6 +264,7 @@ function states.game.keypressed.enter ()
 	if player.landed then
 		state.current = 'base'
 		hook.call('enterbase', player.landed)
+		ui.base.enabled[1] = not mission.mission or mission.mission.canrefuse
 	end
 end
 
@@ -271,13 +280,19 @@ end
 function states.base.keypressed.left()
 	ui.base.usedmouse = false
 	local nitems = #ui.base.items
-	ui.base.selected = ((ui.base.selected or 1) - 2) % nitems + 1
+	local s = ((ui.base.selected or 1) - 2) % nitems + 1
+	if ui.base.enabled[s] then
+		ui.base.selected = s
+	end
 end
 
 function states.base.keypressed.right()
 	ui.base.usedmouse = false
 	local nitems = #ui.base.items
-	ui.base.selected = (ui.base.selected or nitems) % nitems + 1
+	local s = (ui.base.selected or nitems) % nitems + 1
+	if ui.base.enabled[s] then
+		ui.base.selected = s
+	end
 end
 
 function states.base.keypressed.enter()
