@@ -45,3 +45,7 @@ end
 
 function diplomacy.draw()
 end
+
+function diplomacy.allowsave(key)
+	return key == 'relation'
+end

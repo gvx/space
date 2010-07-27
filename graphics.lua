@@ -164,3 +164,7 @@ function graphics.draw()
 	end
 	love.graphics.pop()
 end
+
+function graphics.allowsave(key)
+	return key == 'viewx' or key == 'viewy' or key == 'zoom'
+end

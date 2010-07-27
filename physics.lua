@@ -80,3 +80,7 @@ end
 
 function physics.draw()
 end
+
+function physics.allowsave()
+	return false
+end

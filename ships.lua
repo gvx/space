@@ -60,3 +60,7 @@ end
 
 function ships.draw()
 end
+
+function ships.allowsave()
+	return false
+end

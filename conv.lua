@@ -25,3 +25,8 @@ function states.conv.keypressed.enter()
 		love.graphics.setFont(smallfont)
 	end
 end
+
+local cfuncs = {load=true, update=true, draw=true, allowsave=true}
+function conv.allowsave()
+	return not cfuncs[key]
+end

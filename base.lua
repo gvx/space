@@ -145,3 +145,9 @@ end
 function base.visit.init()
 	hook.call('visitbase', player.landed)
 end
+
+local bfuncs = {load=true, update=true, draw=true, mission=true, buyship=true,
+	allowsave=true}
+function base.allowsave(key)
+	return not bfuncs[key]
+end

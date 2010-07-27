@@ -233,3 +233,7 @@ function states.mainmenu_settings.keypressed.enter()
 	else
 	end
 end
+
+function mainmenu.allowsave()
+	return false
+end

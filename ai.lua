@@ -146,3 +146,7 @@ end
 
 function ai.draw()
 end
+
+function ai.allowsave()
+	return false --that's easy
+end

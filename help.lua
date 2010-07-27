@@ -45,3 +45,7 @@ function states.help.keypressed.escape()
 	state.current = 'game'
 	love.graphics.setFont(smallfont)
 end
+
+function help.allowsave()
+	return false
+end

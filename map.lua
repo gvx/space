@@ -70,3 +70,8 @@ end
 
 function map.draw()
 end
+
+local mfuncs = {load=true, new=true, update=true, draw=true, allowsave=true}
+function map.allowsave(key)
+	return not mfuncs[key]
+end

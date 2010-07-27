@@ -409,3 +409,8 @@ function ui.drawlist(list, info)
 		love.graphics.roundrect('line', 780, 20+info.scrolly, 15, 40, 5, 5)
 	end
 end
+
+local ufuncs = {show=true, showcargo=true, showcargoindex=true, autopilot=true, showlanded=true, _landed = true, showmotion=true}
+function ui.allowsave(key)
+	return ufuncs[key]
+end
