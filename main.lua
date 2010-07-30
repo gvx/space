@@ -9,7 +9,7 @@ end
 state = {frame = 0, totaltime = 0, current = 'mainmenu'}
 states = {}
 
-officialnames = {spacecorp = 'SpaceCorp', a = 'Amania', b = 'Bzadoria',
+officialnames = {a = 'Amania', b = 'Bzadoria',
 	c = 'Cadadonia', d = 'Darzamin', ar = 'Anarchists',
 	br = 'Fighters for the Common Good', cr = 'Eclectic Monkeys',
 	dr = 'Alliance of Oppressed People', dem = 'Deus Ex Machines',

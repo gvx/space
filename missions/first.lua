@@ -1,9 +1,9 @@
 return {
 	id='firstmission',
 	name='Your very first mission',
-	commissionedby='spacecorp',
+	commissionedby='sc',
 	description = [[
-Hello, young spaceman. This is Guisseppe from $spacecorp speaking. I have a mission for you.
+Hello, young spaceman. This is Guisseppe from $sc speaking. I have a mission for you.
 
 You need to take some cargo to a neighbouring planet, called Ugumi. If you do so, you will be rewarded.
 
@@ -11,11 +11,11 @@ Note that you can't refuse this mission, nor accept any other mission before you
 
 Good luck.]],
 	debrief = [[
-Hello, young spaceman. This is Guiseppe from $spacecorp again.
+Hello, young spaceman. This is Guiseppe from $sc again.
 
 I want to thank you for delivering that cargo.
 
-If you ever want to work for $spacecorp again, just land on a planet where $spacecorp has a division (which is nearly any planet you can find) and take on a mission there.
+If you ever want to work for $sc again, just land on a planet where $sc has a division (which is nearly any planet you can find) and take on a mission there.
 
 Of course other parties have missions for you to pick from as well, but they won't pay as much as we do.
 

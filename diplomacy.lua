@@ -28,16 +28,16 @@ end
 function diplomacy.load()
 	diplomacy.relation = {}
 	local r = diplomacy.relation
-	r.a = {b = 70, c = -5, d = -80, spacecorp = 40, ar = -100, br = -40,
+	r.a = {b = 70, c = -5, d = -80, sc = 40, ar = -100, br = -40,
 		cr = -5, dr = 10}
-	r.b = {c = -90, d = 2, spacecorp = 30, ar = -35, br = -100, cr = 20,
+	r.b = {c = -90, d = 2, sc = 30, ar = -35, br = -100, cr = 20,
 		dr = 15}
-	r.c = {d = 100, spacecorp = 55, ar = -45, br = 15, cr = -100, dr = -15}
-	r.d = {spacecorp = 38, ar = -30, br = -35, cr = -60, dr = -100}
-	r.ar = {spacecorp = 17, br = 35, cr = -25, dr = 15}
-	r.br = {spacecorp = 60, cr = -10, dr = 10}
-	r.cr = {spacecorp = 24, dr = 65}
-	r.dr = {spacecorp = -90}
+	r.c = {d = 100, sc = 55, ar = -45, br = 15, cr = -100, dr = -15}
+	r.d = {sc = 38, ar = -30, br = -35, cr = -60, dr = -100}
+	r.ar = {sc = 17, br = 35, cr = -25, dr = 15}
+	r.br = {sc = 60, cr = -10, dr = 10}
+	r.cr = {sc = 24, dr = 65}
+	r.dr = {sc = -90}
 end
 
 function diplomacy.update(dt)
