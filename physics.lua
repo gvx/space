@@ -7,6 +7,8 @@ local p2 = 2*math.pi
 local p = math.pi
 local sqrt, atan2, cos, sin, abs = math.sqrt, math.atan2, math.cos, math.sin, math.abs
 local floor = math.floor
+local mindist
+local mindistangle
 function gravitate(ship, dt)
 	local X = floor(ship.x*.001)
 	local Y = floor(ship.y*.001)
@@ -19,6 +21,12 @@ function gravitate(ship, dt)
 					if d < 500 then
 						local a = 100*object.radius*object.radius/d/d
 						local angle = atan2(ship.y-object.y, ship.x-object.x)
+						if ship == player then
+							if not mindist or a < mindist then
+								mindist = a
+								mindistangle = .5*p-angle
+							end
+						end
 						if (d < object.radius + ship.ship.size + 60 and
 						   object.landingstripangle and
 						   abs(p-(object.landingstripangle - angle)%p2) > p-.2) then
@@ -70,7 +78,12 @@ end
 function physics.update(dt)
 	state.shaking = false
 	player.landed = false
+	mindist = nil
 	gravitate(player, dt)
+	if abs(graphics.rotate - mindistangle) > p then
+		graphics.rotate = p - graphics.rotate
+	end
+	graphics.rotate = graphics.rotate*.9 + mindistangle*.1
 	for i,object in pairs(map.objects) do
 		if object.type == 'ship' then
 			gravitate(object, dt)

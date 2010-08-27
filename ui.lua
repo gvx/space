@@ -173,8 +173,8 @@ function ui.draw()
 			love.graphics.rectangle('fill', 36, 120, smallfont:getWidth(citem.name)+8, 22)
 			love.graphics.setColor(255,255,255)
 			love.graphics.print(citem.name, 40, 136)
-			--love.graphics.print(citem.description, 40, 156)
 			love.graphics.print('Weight: '..citem.weight, 40, 156)
+			love.graphics.printf(citem.description, 40, 176, 500-16)
 		end
 	end
 	if ui.cmdstring then

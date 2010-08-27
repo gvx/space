@@ -80,7 +80,7 @@ end
 
 
 function states.game.keypressed.n()
-	player.ship.cargo = {'package', 'package', 'package', 'package', 'package'}
+	player.ship.cargo = {'package', 'package', 'package', 'package', 'package', 'loot', 'altdollar', 'rock', 'pizza'}
 end
 
 local pfuncs = {load=true, update=true, draw=true}

@@ -43,6 +43,7 @@ mainmenu = {
 		items = {
 			{name='Reverse zoom keys', hint='Make scrolling up zoom out', type='bool', value='revzoom'},
 			{name='Disable shaking', hint='Do not shake the camera when close to a black hole', type='bool', value='noshaking'},
+			{name='Auto-rotate camera', hint='Rotate the camera to show the nearby planet down', type='bool', value='autorot'},
 			{name='Back to main menu', hint='Return to the main menu, all changes are applied', type='return'},
 			},
 		},

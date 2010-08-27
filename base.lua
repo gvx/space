@@ -8,7 +8,9 @@ registerstate'base_visit'
 function base.load()
 end
 
+local rtime = 0
 function base.update(dt)
+	if not base.displist then rtime = rtime + dt return end --quick fix
 	local x, y = love.mouse.getPosition()
 	local mouseDown = love.mouse.isDown'l'
 	if mouseDown then
@@ -37,8 +39,18 @@ end
 
 function base.draw()
 	if state.current == 'base_trade' then
-		love.graphics.print('There is nothing to trade at the moment. Come back later.', 20, 20)
-		love.graphics.print('(maybe next version ;)', 20, 40)
+		-- draw two list: "player has..." and "base has..."
+		local maxcargo = player.ship.cargospace
+		local holds = 0
+		for i = 1, #player.ship.cargo do
+			holds = holds + map.objectreserve[player.ship.cargo[i]].weight
+		end
+		local ydiff = -120*(holds/maxcargo)
+		love.graphics.rectangle('line', 142, 40, 70, 120) --will be replaced with cool cargo image
+		love.graphics.rectangle('fill', 142, 160, 70, ydiff)
+		graphics.drawshape(graphics.vector.trade, 458+165, 100, 20+math.sin(rtime)*5, rtime)
+		love.graphics.rectangle('line', 12, 170, 330, 418)
+		love.graphics.rectangle('line', 458, 170, 330, 418)
 	elseif state.current == 'base_talk' then
 		love.graphics.print('There is no talking to do at the moment. Come back later.', 20, 20)
 		love.graphics.print('(maybe next version ;)', 20, 40)

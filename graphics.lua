@@ -1,4 +1,4 @@
-graphics = {vector = {}, viewx = 0, viewy = 0, zoom = 1}
+graphics = {vector = {}, viewx = 0, viewy = 0, zoom = 1, rotate = 0}
 
 function graphics.load()
 	graphics.vector = require "shipgraphics/all.lua"
@@ -80,6 +80,7 @@ function graphics.update(dt)
 		else
 			graphics.viewx, graphics.viewy = player.x, player.y
 		end
+
 	else
 		--cut scenes?
 	end
@@ -125,10 +126,14 @@ function graphics.draw()
 	love.graphics.push()
 	love.graphics.translate(w, h)
 	love.graphics.scale(graphics.zoom, -graphics.zoom)
+	if settings.autorot then
+		love.graphics.rotate(graphics.rotate)
+	end
 	love.graphics.translate(-graphics.viewx, -graphics.viewy)
+	local invzoom = 1/graphics.zoom
 	for i,object in pairs(map.objects) do
-		local rx = (400 + (object.radius or 0))/graphics.zoom
-		local ry = (300 + (object.radius or 0))/graphics.zoom
+		local rx = (400 + (object.radius or 0))*invzoom
+		local ry = (300 + (object.radius or 0))*invzoom
 		if object.x >= graphics.viewx - rx and object.x <= graphics.viewx + rx and object.y >= graphics.viewy - ry and object.y <= graphics.viewy + ry then
 			if object.type == 'base' or object.type == 'planet' then
 				love.graphics.setLineWidth(1.5)
