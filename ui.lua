@@ -385,7 +385,7 @@ hook.add('command', function(command)
 	if cmds[command] then
 		cmds[command]()
 	else
-		local sp = command:find ' '
+		local sp = command:find(' ', 1, true)
 		if sp then
 			local cmd_name = command:sub(1, sp - 1)
 			if cmds[cmd_name] then
@@ -395,10 +395,16 @@ hook.add('command', function(command)
 	end
 end)
 
+local iD = love.keyboard.isDown
 function states.game.cmdkeys.backspace()
 	if ui.cmdstring == '' then
 		states.game.keypressed.enter()
 	else
+		if iD'lctrl' or iD'rctrl' then
+			while ui.cmdstring:sub(-1) ~= ' ' and #ui.cmdstring > 0 do
+				ui.cmdstring = ui.cmdstring:sub(1,-2)
+			end
+		end
 		ui.cmdstring = ui.cmdstring:sub(1,-2)
 	end
 end
