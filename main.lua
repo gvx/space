@@ -25,6 +25,11 @@ registerstate'dead'
 require "hook"
 
 function love.load()
+	smallfont = love.graphics.newFont('gemfontone.ttf', 16)
+	largefont = love.graphics.newFont('gemfontone.ttf', 30)
+	mediumfont = love.graphics.newFont('gemfontone.ttf', 22)
+	love.graphics.setFont(largefont)
+	
 	require "map"
 	require "graphics"
 	require "ui"
@@ -38,11 +43,6 @@ function love.load()
 	require "diplomacy"
 	require "help"
 	require "conv"
-	
-	smallfont = love.graphics.newFont('gemfontone.ttf', 16)
-	largefont = love.graphics.newFont('gemfontone.ttf', 30)
-	mediumfont = love.graphics.newFont('gemfontone.ttf', 22)
-	love.graphics.setFont(largefont)
 	
 	restart()
 end
