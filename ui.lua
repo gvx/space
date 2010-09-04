@@ -403,12 +403,14 @@ local iD = love.keyboard.isDown
 function states.game.cmdkeys.backspace()
 	if ui.cmdstring == '' then
 		states.game.keypressed.enter()
-	else
-		if iD'lctrl' or iD'rctrl' then
-			while ui.cmdstring:sub(-1) ~= ' ' and #ui.cmdstring > 0 do
-				ui.cmdstring = ui.cmdstring:sub(1,-2)
-			end
+	elseif iD'lctrl' or iD'rctrl' then
+		while ui.cmdstring:sub(-1) ~= ' ' and #ui.cmdstring > 0 do
+			ui.cmdstring = ui.cmdstring:sub(1,-2)
 		end
+		while ui.cmdstring:sub(-1) == ' ' and #ui.cmdstring > 0 do
+			ui.cmdstring = ui.cmdstring:sub(1,-2)
+		end
+	else
 		ui.cmdstring = ui.cmdstring:sub(1,-2)
 	end
 end
