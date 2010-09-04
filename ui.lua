@@ -184,6 +184,10 @@ function ui.draw()
 		love.graphics.rectangle('fill', 0, 0, 800, 600)
 		love.graphics.setColor(255,255,255)
 		love.graphics.print(':'..ui.cmdstring, 400, 38)
+		local x = smallfont:getWidth(':'..ui.cmdstring) + 402.5
+		if math.floor(state.frame / 30) % 2 == 0 then 
+			love.graphics.line(x, 28, x, 40)
+		end
 	end
 end
 

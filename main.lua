@@ -65,8 +65,8 @@ end
 
 function love.update(dt)
 	if state.current == 'game' then
+		state.frame = state.frame + 1
 		if not ui.cmdstring then
-			state.frame = state.frame + 1
 			state.totaltime = state.totaltime + dt
 			
 			mission.update(dt)
