@@ -362,6 +362,28 @@ function states.game.cmdkeys.enter()
 	ui.cmdstring = nil
 end
 
+cmds = {}
+function cmds.set(rest)
+	if settinginfo[rest] == 'bool' then
+		settings[rest] = true
+	end
+end
+function cmds.unset(rest)
+	if settinginfo[rest] == 'bool' then
+		settings[rest] = false
+	end
+end
+
+hook.add('command', function(command)
+	local sp = command:find ' '
+	if sp then
+		local cmd_name = command:sub(1, sp - 1)
+		if cmds[cmd_name] then
+			cmds[cmd_name](command:sub(sp + 1))
+		end
+	end
+end)
+
 function states.game.cmdkeys.backspace()
 	if ui.cmdstring == '' then
 		states.game.keypressed.enter()

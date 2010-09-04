@@ -62,6 +62,7 @@ mainmenu = {
 	quitting = {},
 	}
 settings = {}
+settinginfo = {revzoom = 'bool', noshaking = 'bool', autorot = 'bool'}
 registerstate 'mainmenu'
 registerstate 'mainmenu_transition'
 registerstate 'mainmenu_settings'
