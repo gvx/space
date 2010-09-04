@@ -9,7 +9,9 @@ ui = {
 		states = {'mission', 'trade', 'buyship', 'talk', 'visit'},
 		rot = {0, 0, 0, 0, 0},
 		usedmouse = true,
-	}
+	},
+	cmdlist = {''},
+	cmdlistindex = 1,
 }
 registerstate'paused'
 registerstate'base'
@@ -354,10 +356,11 @@ end
 
 function states.game.cmdkeys.enter()
 	states.game.keypressed, states.game.cmdkeys = states.game.cmdkeys, states.game.keypressed
-	if ui.cmdstring == 'showmotion' or ui.cmdstring == 'sm' then
-		ui.showmotion = not ui.showmotion
-	elseif ui.cmdstring ~= '' then
+	if ui.cmdstring ~= '' then
 		hook.call('command', ui.cmdstring)
+		ui.cmdlist[#ui.cmdlist] = ui.cmdstring
+		table.insert(ui.cmdlist, '')
+		ui.cmdlistindex = #ui.cmdlist
 	end
 	ui.cmdstring = nil
 end
@@ -373,13 +376,21 @@ function cmds.unset(rest)
 		settings[rest] = false
 	end
 end
+function cmds.showmotion()
+	ui.showmotion = not ui.showmotion
+end
+cmds.sm = cmds.showmotion
 
 hook.add('command', function(command)
-	local sp = command:find ' '
-	if sp then
-		local cmd_name = command:sub(1, sp - 1)
-		if cmds[cmd_name] then
-			cmds[cmd_name](command:sub(sp + 1))
+	if cmds[command] then
+		cmds[command]()
+	else
+		local sp = command:find ' '
+		if sp then
+			local cmd_name = command:sub(1, sp - 1)
+			if cmds[cmd_name] then
+				cmds[cmd_name](command:sub(sp + 1))
+			end
 		end
 	end
 end)
@@ -389,6 +400,20 @@ function states.game.cmdkeys.backspace()
 		states.game.keypressed.enter()
 	else
 		ui.cmdstring = ui.cmdstring:sub(1,-2)
+	end
+end
+
+function states.game.cmdkeys.up()
+	if ui.cmdlistindex > 1 then
+		ui.cmdlistindex = ui.cmdlistindex - 1
+		ui.cmdstring = ui.cmdlist[ui.cmdlistindex]
+	end
+end
+
+function states.game.cmdkeys.down()
+	if ui.cmdlistindex < #ui.cmdlist then
+		ui.cmdlistindex = ui.cmdlistindex + 1
+		ui.cmdstring = ui.cmdlist[ui.cmdlistindex]
 	end
 end
 
