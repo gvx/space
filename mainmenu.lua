@@ -107,7 +107,7 @@ function mainmenu.draw(a)
 	local sh = math.sqrt(math.abs(mainmenu.seldy))*.3
 	local shx = sh > 2 and math.random(sh)-.5*sh or 0
 	local shy = sh > 2 and math.random(sh)-.5*sh or 0
-	love.graphics.print('Space', 20 + shx, 50 + shy)
+	love.graphics.print('Space', 20 + shx, 25 + shy)
 	local I = mainmenu.selitem
 	for i=1,#mainmenu.items do
 		local m = math.abs(i - mainmenu.sely / 40)*10
@@ -118,6 +118,7 @@ function mainmenu.draw(a)
 			love.graphics.setColor(255-M,255-M,255-M, a)
 		end
 		love.graphics.print(mainmenu.items[i], 300 - m, 300 + i * 40 - mainmenu.sely)
+		--love.graphics.rectangle('line', 300 - m, 275 + i * 40 - mainmenu.sely, 100, 25)
 	end
 end
 
@@ -133,12 +134,12 @@ function mainmenu.settings.draw()
 			if mainmenu.settings.timeout > .5 then
 				love.graphics.setFont(smallfont)
 				love.graphics.setColor(255,255,255, math.min((mainmenu.settings.timeout-.5)*255, 255))
-				love.graphics.print(setting.hint, 740 - smallfont:getWidth(setting.hint), i*30+5)
+				love.graphics.print(setting.hint, 740 - smallfont:getWidth(setting.hint), i*30-8)
 				love.graphics.setFont(largefont)
 			end
 		end
 		love.graphics.setColor(255,255,255)
-		love.graphics.print(setting.name, 50, i*30+10)
+		love.graphics.print(setting.name, 50, i*30-15)
 		if setting.type == 'bool' then
 			love.graphics.setLineWidth(2)
 			love.graphics.rectangle('line', 25, i*30-10, 20, 20)
@@ -187,10 +188,11 @@ function mainmenu.credits.draw()
 	local name = mainmenu.credits.items[i]
 	if name then
 		local a = 255 - (t%2-1)^2*255
+		local displacement = t%2 * 30
 		love.graphics.setColor(255,255,255, a)
-		love.graphics.print(name[1], 10 + (i * 74) % 95, 50 + i)
-		love.graphics.print(name[2], 130 + (i * 185) % 115, 90 + i)
-		love.graphics.print(name[3], 70 + (i * 18) % 39, 120 + i)
+		love.graphics.print(name[1], 10 + (i * 74) % 95, 20 + i + displacement)
+		love.graphics.print(name[2], 130 - displacement + (i * 185) % 115, 120 + i)
+		love.graphics.print(name[3], 70 + (i * 18) % 39, 220 + i - displacement)
 	end
 end
 
