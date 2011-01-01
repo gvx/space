@@ -180,23 +180,25 @@ function love.errhand(msg)
 	local wi = love.graphics.getWidth() - 140
 	address = 'github.com/gvx/space/issues'
 	local wa = love.graphics.getWidth() - largefont:getWidth(address) - 20
-	local ha = love.graphics.getHeight() - 20
+	local ha = love.graphics.getHeight() - 45
+	local fb = love.graphics.newFramebuffer()
 
 	local function draw()
-		love.graphics.clear()
 		love.graphics.setFont(largefont)
-		love.graphics.print('Oops! Something went wrong.', 20, 35)
+		love.graphics.print('Oops! Something went wrong.', 20, 10)
 		love.graphics.print(address, wa, ha)
 		love.graphics.setFont(mediumfont)
 		if showtrace then
-			love.graphics.printf(p, 70, 120, wi)
+			love.graphics.printf(p, 70, 95, wi)
 		else
-			love.graphics.printf('An error occurred. It would be great if you want to file a bug report. To do that, please visit github.com/gvx/space/issues. First check if this bug has not been fixed already. If you have no terminal with the traceback of the error, press space. To quit, press escape.', 70, 120, wi)
+			love.graphics.printf('An error occurred. It would be great if you want to file a bug report. To do that, please visit github.com/gvx/space/issues. First check if this bug has not been fixed already. If you have no terminal with the traceback of the error, press space. To quit, press escape.', 70, 95, wi)
 		end
-		love.graphics.present()
 	end
 
-	draw()
+	fb:renderTo(draw)
+	love.graphics.clear()
+	love.graphics.draw(fb, 0, 0)
+	love.graphics.present()
 
 	local e, a, b, c
 	while true do
@@ -210,10 +212,13 @@ function love.errhand(msg)
 				return
 			elseif a == ' ' then
 				showtrace = not showtrace
+				fb:renderTo(draw)
 			end
 		end
 
-		draw()
+		love.graphics.clear()
+		love.graphics.draw(fb, 0, 0)
+		love.graphics.present()
 
 		love.timer.sleep(25)
 
