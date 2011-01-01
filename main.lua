@@ -86,7 +86,7 @@ function love.update(dt)
 		love.timer.sleep(50)
 	elseif state.current == 'mainmenu' then
 		mainmenu.update(dt)
-		love.timer.sleep(20)
+		love.timer.sleep(10)
 	elseif state.current == 'base' then
 		ui.base.update(dt)
 		love.timer.sleep(20)

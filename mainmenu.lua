@@ -94,8 +94,8 @@ function mainmenu.update(dt)
 	mainmenu.sely = mainmenu.sely + mainmenu.seldy * dt
 	if love.mouse.isDown'l' then
 		local y = love.mouse.getY() 
-		if y > 300 + 40 - 30  - mainmenu.sely and y < 300 + 40*#mainmenu.items - mainmenu.sely then
-			mainmenu.selitem = math.floor((y - 300 + 30 + mainmenu.sely)/40)
+		if y > 340 - mainmenu.sely and y < 330 + 40*#mainmenu.items - mainmenu.sely then
+			mainmenu.selitem = math.floor((y - 300 + mainmenu.sely)/40)
 			states.mainmenu.keypressed.enter()
 		end
 	end
@@ -108,14 +108,19 @@ function mainmenu.draw(a)
 	local shx = sh > 2 and math.random(sh)-.5*sh or 0
 	local shy = sh > 2 and math.random(sh)-.5*sh or 0
 	love.graphics.print('Space', 20 + shx, 25 + shy)
+	if not debug then
+		love.graphics.setFont(smallfont)
+		love.graphics.print('Space is not SELOVE-compatible. Sorry.', 520, 8)
+		love.graphics.setFont(largefont)
+	end
 	local I = mainmenu.selitem
 	for i=1,#mainmenu.items do
 		local m = math.abs(i - mainmenu.sely / 40)*10
 		local M = i==I and 0 or (100+ math.sqrt(math.abs(i-I))*50)
-		if math.floor((love.mouse.getY()  - 300 + 30 + mainmenu.sely)/40) == i then
-			love.graphics.setColor(i==I and 20 or (255-M),255,255, a)
+		if math.floor((love.mouse.getY() - 300 + mainmenu.sely)/40) == i then
+			love.graphics.setColor(i==I and 20 or (255-M),255,255, i==I and 255 or a)
 		else
-			love.graphics.setColor(255-M,255-M,255-M, a)
+			love.graphics.setColor(255-M,255-M,255-M, i==I and 255 or a)
 		end
 		love.graphics.print(mainmenu.items[i], 300 - m, 300 + i * 40 - mainmenu.sely)
 		--love.graphics.rectangle('line', 300 - m, 275 + i * 40 - mainmenu.sely, 100, 25)
@@ -160,14 +165,7 @@ function mainmenu.transition.update(dt)
 end
 function mainmenu.transition.draw()
 	local t = mainmenu.transition.timeout
-	love.graphics.push()
-	local y = 300 + mainmenu.selitem * 40 - mainmenu.sely
-	love.graphics.translate(300, y)
-	--love.graphics.scale(.5/t,.5/t)--mainmenu.transition.timeout*2, 1)
-	love.graphics.rotate((0.707-t^.5)*8)
-	love.graphics.translate(-300, -y)
 	mainmenu.draw(510*t)
-	love.graphics.pop()
 end
 function mainmenu.quitting.update(dt)
 	love.event.push'q'
