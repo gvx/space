@@ -18,6 +18,7 @@ function base.update(dt)
 			base.info.scrolling = true
 		end
 	else
+		base.info.click_enabled = true
 		base.info.scrolling = false
 	end
 	if base.info.scrolling  then
@@ -30,7 +31,7 @@ function base.update(dt)
 		local sy = y + math.max(0,#base.displist-4)*150 * base.info.scrolly / base.info.maxscrolly
 		if (sy-20) % 150 < 120 then
 			base.info.selected = math.ceil(sy / 150)
-			if mouseDown then
+			if mouseDown and base.info.click_enabled then
 				base.info.activate(base.info.selected)
 			end
 		end
@@ -63,7 +64,7 @@ function base.draw()
 end
 
 function base.mission.activate(i)
-	if not mission.mission or mission.mission.canrefuse and #base.mission.list > 0 then
+	if not mission.mission or mission.mission.canrefuse and #base.mission.list >= i then
 		mission.newmission = base.mission.list[i]
 		mission.text = mission.newmission.description
 		mission.tagline = mission.newmission.canrefuse and 'Press Enter to accept or Escape to refuse.' or 'Press Enter or Escape to accept.'
@@ -95,6 +96,7 @@ function base.mission.init()
 	end
 	base.info.scrolly = 0
 	base.info.activate = base.mission.activate
+	base.info.click_enabled = false
 end
 
 function base.buyship.activate()
@@ -114,28 +116,12 @@ end
 function states.base_mission.keypressed.escape()
 	state.current = 'base'
 end
-function states.base_mission.keypressed.enter()
-	if not mission.mission or mission.mission.canrefuse and #base.mission.list > 0 then
-		mission.newmission = base.mission.list[1]
-		love.graphics.setFont(mediumfont)
-		state.current = 'mission'
-	end
+
+for i=1,4 do
+	states.base_mission.keypressed[tostring(i)] = function () base.mission.activate(i) end
 end
-states.base_mission.keypressed['1'] = states.base_mission.keypressed.enter
-states.base_mission.keypressed['2'] = function ()
-	if not mission.mission or mission.mission.canrefuse and #base.mission.list > 2 then
-		mission.newmission = base.mission.list[2]
-		love.graphics.setFont(mediumfont)
-		state.current = 'mission'
-	end
-end
-states.base_mission.keypressed['3'] = function ()
-	if not mission.mission or mission.mission.canrefuse and #base.mission.list > 3 then
-		mission.newmission = base.mission.list[3]
-		love.graphics.setFont(mediumfont)
-		state.current = 'mission'
-	end
-end
+
+states.base_mission.keypressed.enter = states.base_mission.keypressed['1']
 
 states.base_trade.keypressed.escape = states.base_mission.keypressed.escape
 states.base_buyship.keypressed.escape = states.base_mission.keypressed.escape
