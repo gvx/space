@@ -116,10 +116,10 @@ function ui.draw()
 		love.graphics.setColor(0,0,0,90)
 		love.graphics.rectangle('fill', 36, 24, 300, 84-20)
 		love.graphics.setColor(255,255,255,255)
-		love.graphics.print(("Speed: %02d km/s"):format(sqrt(player.dx^2 + player.dy^2)/5), 40, 40)
-		love.graphics.print("Rank: "..ranks[player.rank], 40, 60)
+		love.graphics.print(("Speed: %02d km/s"):format(sqrt(player.dx^2 + player.dy^2)/5), 40, 28)
+		love.graphics.print("Rank: "..ranks[player.rank], 40, 48)
 		if mission.mission then
-			love.graphics.print("Mission: "..mission.mission.name, 40, 80)
+			love.graphics.print("Mission: "..mission.mission.name, 40, 68)
 		end
 		graphics.drawshape(graphics.vector.arrow, 750, 40, 15, -player.angle)
 		if ui.showmotion then
@@ -140,19 +140,19 @@ function ui.draw()
 			love.graphics.setColor(255,255,255,255)
 		end
 		love.graphics.setColor(0,0,0,255)
-		love.graphics.print("Zoom", 756-20, 592-20)
+		love.graphics.print("Zoom", 736, 560)
 		love.graphics.setColor(255,255,255,255)
 		if ui.autopilot then
 			love.graphics.setColor(0,0,0,90)
 			love.graphics.rectangle('fill', 16, 578, 600, 20)
 			love.graphics.setColor(255,255,255,255)
-			love.graphics.print("Auto pilot: click on an area to go there.", 20, 592)
+			love.graphics.print("Auto pilot: click on an area to go there.", 20, 580)
 		end
 		if player.landed or ui.showlanded then
 			love.graphics.setColor(0,0,0,90)
 			love.graphics.rectangle('fill', 16, 558, 600, 20)
 			love.graphics.setColor(255,255,255,255)
-			love.graphics.print("Landed on "..(ui._landed or player.landed).name..". Press Enter to open base dialog.", 20, 572)
+			love.graphics.print("Landed on "..(ui._landed or player.landed).name..". Press Enter to open base dialog.", 20, 560)
 		end
 		if ui.showcargo then
 			love.graphics.setColor(0,0,0,90)
@@ -162,9 +162,9 @@ function ui.draw()
 				love.graphics.rectangle('fill', 36, 122+ui.showcargoindex*20, smallfont:getWidth(map.objectreserve[player.ship.cargo[ui.showcargoindex]].name)+8, 18)
 			end
 			love.graphics.setColor(255,255,255,255)
-			love.graphics.print('Cargo:', 40, 136)
+			love.graphics.print('Cargo:', 40, 124)
 			for i=1,#player.ship.cargo do
-				love.graphics.print(map.objectreserve[player.ship.cargo[i]].name, 40, 136 + 20 * i)
+				love.graphics.print(map.objectreserve[player.ship.cargo[i]].name, 40, 124 + 20 * i)
 			end
 		end
 		if ui.showcargoitem then
@@ -174,16 +174,16 @@ function ui.draw()
 			love.graphics.setColor(255,255,255,90)
 			love.graphics.rectangle('fill', 36, 120, smallfont:getWidth(citem.name)+8, 22)
 			love.graphics.setColor(255,255,255)
-			love.graphics.print(citem.name, 40, 136)
-			love.graphics.print('Weight: '..citem.weight, 40, 156)
-			love.graphics.printf(citem.description, 40, 176, 500-16)
+			love.graphics.print(citem.name, 40, 124)
+			love.graphics.print('Weight: '..citem.weight, 40, 144)
+			love.graphics.printf(citem.description, 40, 164, 500-16)
 		end
 	end
 	if ui.cmdstring then
 		love.graphics.setColor(20,20,20,180)
 		love.graphics.rectangle('fill', 0, 0, 800, 600)
 		love.graphics.setColor(255,255,255)
-		love.graphics.print(':'..ui.cmdstring, 400, 38)
+		love.graphics.print(':'..ui.cmdstring, 400, 26)
 		local x = smallfont:getWidth(':'..ui.cmdstring) + 402.5
 		if math.floor(state.frame / 30) % 2 == 0 then 
 			love.graphics.line(x, 28, x, 40)
@@ -193,7 +193,7 @@ end
 
 function ui.drawbase()
 	love.graphics.setColor(255,255,255)
-	love.graphics.print("You are now on "..player.landed.name, 40, 60)
+	love.graphics.print("You are now on "..player.landed.name, 40, 48)
 	local x, y = love.mouse.getX(), love.mouse.getY()
 	
 	local p = ui.base.posses
@@ -218,7 +218,7 @@ function ui.drawbase()
 		end
 		love.graphics.roundrect('line', startx, p.y, p.w, p.h, p.r, p.r)
 		local txt = ui.base.items[i]
-		love.graphics.print(txt, startx + p.w *.5 - smallfont:getWidth(txt)*.5, p.y + p.h + 20 - (mover and 6 or 0))
+		love.graphics.print(txt, startx + p.w *.5 - smallfont:getWidth(txt)*.5, p.y + p.h + 8 - (mover and 6 or 0)) -- what the fuck was I thinking?
 		if ui.base.vector[i] then
 			--graphics.drawshape(graphics.vector.arrow, 750, 40, 15, -player.angle)
 			graphics.drawshape(graphics.vector[ui.base.vector[i]], startx + p.w *.5, p.y + p.h * .5, 20, ui.base.rot[i])
@@ -452,8 +452,8 @@ function ui.drawlist(list, info)
 		end
 		love.graphics.roundrect('line', 20, 20 + i * 150 - 150 - dispos, 700, 120, 20, 20)
 		--graphics.drawshape(graphics.vector[ships[ship].vector], 80, 20 + i * 150 - 150 + 60 - dispos, math.min(ships[ship].size, 15), 0) --?
-		love.graphics.print(item.name, 140, 20 + i * 150 - 150 + 20)
-		love.graphics.printf(item.description, 140, 40 + i * 150 - 150 + 20 - dispos, 700 - 120 - 20)
+		love.graphics.print(item.name, 140, 8 + i * 150 - 150 + 20)
+		love.graphics.printf(item.description, 140, 40 + i * 150 - 150 + 8 - dispos, 700 - 120 - 20)
 	end
 	if #list > 4 then
 		love.graphics.setColor(70,70,70)
