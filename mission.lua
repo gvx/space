@@ -89,8 +89,8 @@ end
 
 function mission.drawscreen()
 	love.graphics.setColor(255,255,255)
-	love.graphics.printf(mission.text, 40, 50, 720)
-	love.graphics.print(mission.tagline, 40, 560)
+	love.graphics.printf(mission.text, 40, 32, 720)
+	love.graphics.print(mission.tagline, 40, 542)
 	love.graphics.setColor(255,255,255,mission.animx*100)
 	love.graphics.rectangle('fill', 0, 535, 800, 40)
 end
