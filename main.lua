@@ -146,6 +146,10 @@ function love.keypressed(key, unicode)
 	end
 end
 
+if not debug then return end -- do not use custom error handler when debug is
+                             -- not available (most likely because we're
+                             -- running on SELÖVE)
+
 local function error_printer(msg, layer)
 	print((debug.traceback("Error: " .. msg, 1+(layer or 1)):gsub("\n[^\n]+$", "")))
 end

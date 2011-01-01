@@ -108,11 +108,6 @@ function mainmenu.draw(a)
 	local shx = sh > 2 and math.random(sh)-.5*sh or 0
 	local shy = sh > 2 and math.random(sh)-.5*sh or 0
 	love.graphics.print('Space', 20 + shx, 25 + shy)
-	if not debug then
-		love.graphics.setFont(smallfont)
-		love.graphics.print('Space is not SELOVE-compatible. Sorry.', 520, 8)
-		love.graphics.setFont(largefont)
-	end
 	local I = mainmenu.selitem
 	for i=1,#mainmenu.items do
 		local m = math.abs(i - mainmenu.sely / 40)*10
