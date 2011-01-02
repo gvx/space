@@ -22,10 +22,16 @@ function ui.load()
 end
 
 local function zoomout(n)
-	graphics.zoom = graphics.zoom/(1 + .01*n)
+	local zoom = graphics.zoom/(1 + .01*n)
+	if zoom > 0.0762 then
+		graphics.zoom = zoom
+	end
 end
 local function zoomin(n)
-	graphics.zoom = graphics.zoom*(1 + .01*n)
+	local zoom = graphics.zoom*(1 + .01*n)
+	if zoom < 1 then
+		graphics.zoom = zoom
+	end
 end
 
 function ui.update(dt)
@@ -48,12 +54,12 @@ function ui.update(dt)
 		local y, z = love.mouse.getY(), graphics.zoom
 		if y > 470-20 then
 			if y < 570-20 then
-				z = 1/1.05^((570-love.mouse.getY()-20)*1.3)
+				z = 1/1.02^((570-love.mouse.getY()-20)*1.3)
 			else
 				z = 1
 			end
 		elseif y > 450-20 then
-			z = 1/1.05^130
+			z = 1/1.02^130
 		end
 		if x > 740 and x < 790 then
 			graphics.zoom = (graphics.zoom*3 + z)*.25
