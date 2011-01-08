@@ -43,6 +43,7 @@ function love.load()
 	require "diplomacy"
 	require "help"
 	require "conv"
+	require "mapview"
 	
 	restart()
 end
@@ -61,6 +62,7 @@ function restart()
 	help.load()
 	conv.load()
 	diplomacy.load()
+	mapview.load()
 end
 
 function love.update(dt)
@@ -96,6 +98,9 @@ function love.update(dt)
 	elseif state.current == 'conv' then
 		conv.update(dt)
 		love.timer.sleep(20)
+	elseif state.current == 'mapview' then
+		mapview.update(dt)
+		love.timer.sleep(20)
 	elseif state.current:sub(1,7) == 'mission' then
 		mission.updatescreen(dt)
 		love.timer.sleep(20)
@@ -128,6 +133,8 @@ function love.draw()
 		mainmenu.draw()
 	elseif state.current == 'conv' then
 		conv.draw()
+	elseif state.current == 'mapview' then
+		mapview.draw()
 	elseif state.current:sub(1,7) == 'mission' then
 		mission.drawscreen()
 	elseif state.current:sub(1,4) == 'base' then
