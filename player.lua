@@ -31,6 +31,10 @@ function player.update(dt)
 		if (ddy>0) ~= (player.dy>0) then ddy = ddy * ship.revengine end
 		player.dx = player.dx + ddx
 		player.dy = player.dy + ddy
+		player.fuel = math.max(player.fuel - dt * mult * mult, 0)
+		if player.fuel == 0 then
+			player.remove = true
+		end
 	end
 	if D"right" or D"d" then
 		player.autopilot = false
@@ -55,6 +59,9 @@ function player.update(dt)
 	end
 	player.x = player.x + player.dx * dt
 	player.y = player.y + player.dy * dt
+	if player.ship.hull == 0 then
+		player.remove = true
+	end
 	if player.remove then
 		--player died
 		state.current = 'dead'
@@ -77,10 +84,6 @@ end
 
 function states.game.keypressed.m()
 	player.ship.cargo = {}
-end
-
-function states.game.keypressed.x()
-	player.ship.hull = player.ship.hull * .95
 end
 
 function states.game.keypressed.n()

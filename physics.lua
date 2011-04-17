@@ -41,6 +41,7 @@ function gravitate(ship, dt)
 							ship.dy = ship.dy * .1^dt
 							if ship == player then
 								player.landed = object
+								player.fuel = 100
 							end
 						elseif d < object.radius + ship.ship.size then
 							local r = object.radius + ship.ship.size
@@ -50,6 +51,7 @@ function gravitate(ship, dt)
 							--ship.dy = ship.dy + (ship_y - ship.y)*dt
 							ship.x = ship_x
 							ship.y = ship_y
+							ship.ship.hull = math.max(ship.ship.hull - sqrt(ship.dx*ship.dx + ship.dy*ship.dy)*dt*.01, 0)
 							ship.dx = ship.dx * .5^dt
 							ship.dy = ship.dy * .5^dt
 						else
