@@ -114,7 +114,8 @@ function states.mission_screen.keypressed.enter()
 end
 
 local mfuncs = {load=true, update=true, close_mission=true, close_debrief=true,
-	close_screen=true, updatescreen=true, drawscreen=true, allowsave=true}
+	close_screen=true, updatescreen=true, drawscreen=true, allowsave=true,
+	mission=true, mission_debrief=true, mission_screen=true}
 function mission.allowsave(key)
 	return not mfuncs[key]
 end

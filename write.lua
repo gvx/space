@@ -12,9 +12,29 @@ local function write(t, memo)
 			memo[t] = '_' .. counter
 		end
 		return memo[t]
+	elseif ty == 'function' then
+		if not memo[t] then
+			counter = counter + 1
+			memo[t] = '_' .. counter
+		end
+		return memo[t]
 	else
 		return '???'
 	end
+end
+
+local function make_safe(text)
+	local m = {}
+	text = ("%q"):format(text):gsub('\\\n', '\\n')
+	for i=1,#text do
+		local s = text:byte(i)
+		if s < 32 or s >= 127 then
+			m[i] = ("\\%03d"):format(s)
+		else
+			m[i] = text:sub(i,i)
+		end
+	end
+	return table.concat(m)
 end
 
 local function write_key_value_pair(k, v, memo, name)
@@ -28,6 +48,9 @@ end
 local function write_table_ex(t, memo, srefs, name)
 	if name then
 		memo[t] = name
+	end
+	if type(t) == 'function' then
+		return (name and 'local ' .. name .. ' = ' or 'return ') .. 'loadstring ' .. make_safe(string.dump(t))
 	end
 	local m = {'{'}
 	for i,v in ipairs(t) do

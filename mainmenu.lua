@@ -2,41 +2,14 @@ mainmenu = {
 	selitem = 1,
 	sely = 40,
 	seldy = 0,
-	items = {'New game', 'Continue', 'Settings', 'Credits', 'Quit'},
-	actions = {
-		function ()
-			mainmenu.transition.targetfont = smallfont
-			mainmenu.transition.timeout = .5
-			mainmenu.transition.target = 'game'
-			state.current = 'mainmenu_transition'
-		end,
-		function ()
-			mainmenu.transition.targetfont = smallfont
-			mainmenu.transition.timeout = .5
-			mainmenu.transition.target = 'game'
-			state.current = 'mainmenu_transition'
-		end,
-		function ()
-			mainmenu.transition.targetfont = largefont
-			mainmenu.transition.timeout = .5
-			mainmenu.transition.target = 'mainmenu_settings'
-			state.current = 'mainmenu_transition'
-		end,
-		function ()
-			mainmenu.transition.targetfont = largefont
-			mainmenu.credits.totaltime = 0
-			mainmenu.transition.timeout = .5
-			mainmenu.transition.target = 'mainmenu_credits'
-			state.current = 'mainmenu_transition'
-		end,
-		function ()
-			mainmenu.transition.targetfont = largefont
-			mainmenu.credits.totaltime = 0
-			mainmenu.transition.timeout = .5
-			mainmenu.transition.target = 'mainmenu_quitting'
-			state.current = 'mainmenu_transition'
-		end
-		},
+	names = {new = 'New game', cont = 'Continue', load = 'Load game',
+		save = 'Save game', settings = 'Settings', credits = 'Credits', quit = 'Quit'},
+	items = {
+			{'new', 'load', 'settings', 'credits', 'quit'},
+			{'cont', 'save', 'new', 'load', 'settings', 'credits', 'quit'}
+			},
+	menu_type_index = 1,
+	actions = {},
 	settings = {
 		timeout = 0,
 		selitem = 1,
@@ -59,12 +32,61 @@ mainmenu = {
 	transition = {
 		timeout = 0,
 		},
+	saving = {},
+	loading = {},
 	quitting = {},
 	}
+
+function mainmenu.actions.new()
+	mainmenu.transition.targetfont = smallfont
+	mainmenu.transition.timeout = .5
+	mainmenu.transition.target = 'game'
+	state.current = 'mainmenu_transition'
+end
+function mainmenu.actions.cont()
+	mainmenu.transition.targetfont = smallfont
+	mainmenu.transition.timeout = .5
+	mainmenu.transition.target = 'game'
+	state.current = 'mainmenu_transition'
+end
+function mainmenu.actions.save()
+	mainmenu.transition.targetfont = smallfont
+	mainmenu.transition.timeout = .5
+	mainmenu.transition.target = 'mainmenu_saving'
+	state.current = 'mainmenu_transition'
+end
+function mainmenu.actions.load()
+	mainmenu.transition.targetfont = smallfont
+	mainmenu.transition.timeout = .5
+	mainmenu.transition.target = 'mainmenu_loading'
+	state.current = 'mainmenu_transition'
+end
+function mainmenu.actions.settings()
+	mainmenu.transition.targetfont = largefont
+	mainmenu.transition.timeout = .5
+	mainmenu.transition.target = 'mainmenu_settings'
+	state.current = 'mainmenu_transition'
+end
+function mainmenu.actions.credits()
+	mainmenu.transition.targetfont = largefont
+	mainmenu.credits.totaltime = 0
+	mainmenu.transition.timeout = .5
+	mainmenu.transition.target = 'mainmenu_credits'
+	state.current = 'mainmenu_transition'
+end
+function mainmenu.actions.quit()
+	mainmenu.transition.targetfont = largefont
+	mainmenu.transition.timeout = .5
+	mainmenu.transition.target = 'mainmenu_quitting'
+	state.current = 'mainmenu_transition'
+end
+
 settings = {}
 settinginfo = {revzoom = 'bool', noshaking = 'bool', autorot = 'bool'}
 registerstate 'mainmenu'
 registerstate 'mainmenu_transition'
+registerstate 'mainmenu_saving'
+registerstate 'mainmenu_loading'
 registerstate 'mainmenu_settings'
 registerstate 'mainmenu_credits'
 registerstate 'mainmenu_quitting'
@@ -109,7 +131,7 @@ function mainmenu.draw(a)
 	local shy = sh > 2 and math.random(sh)-.5*sh or 0
 	love.graphics.print('Space', 20 + shx, 25 + shy)
 	local I = mainmenu.selitem
-	for i=1,#mainmenu.items do
+	for i=1,#mainmenu.items[mainmenu.menu_type_index] do
 		local m = math.abs(i - mainmenu.sely / 40)*10
 		local M = i==I and 0 or (100+ math.sqrt(math.abs(i-I))*50)
 		if math.floor((love.mouse.getY() - 300 + mainmenu.sely)/40) == i then
@@ -117,7 +139,7 @@ function mainmenu.draw(a)
 		else
 			love.graphics.setColor(255-M,255-M,255-M, i==I and 255 or a)
 		end
-		love.graphics.print(mainmenu.items[i], 300 - m, 300 + i * 40 - mainmenu.sely)
+		love.graphics.print(mainmenu.names[mainmenu.items[mainmenu.menu_type_index][i]], 300 - m, 300 + i * 40 - mainmenu.sely)
 		--love.graphics.rectangle('line', 300 - m, 275 + i * 40 - mainmenu.sely, 100, 25)
 	end
 end
@@ -168,6 +190,20 @@ end
 function mainmenu.quitting.draw()
 end
 
+function mainmenu.saving.update(dt)
+	savegame 'bluh'
+	state.current = 'game'
+end
+function mainmenu.saving.draw()
+end
+
+function mainmenu.loading.update(dt)
+	loadgame 'bluh'
+	state.current = 'game'
+end
+function mainmenu.loading.draw()
+end
+
 
 function mainmenu.credits.update(dt)
 	mainmenu.credits.totaltime = mainmenu.credits.totaltime + dt
@@ -190,7 +226,7 @@ function mainmenu.credits.draw()
 end
 
 function states.mainmenu.keypressed.down()
-	if mainmenu.selitem < #mainmenu.items then
+	if mainmenu.selitem < #mainmenu.items[mainmenu.menu_type_index] then
 		mainmenu.selitem = mainmenu.selitem + 1
 	end
 end
@@ -202,7 +238,7 @@ function states.mainmenu.keypressed.up()
 end
 
 function states.mainmenu.keypressed.enter()
-	mainmenu.actions[mainmenu.selitem]()
+	mainmenu.actions[mainmenu.items[mainmenu.menu_type_index][mainmenu.selitem]]()
 end
 
 function states.mainmenu_settings.keypressed.escape()

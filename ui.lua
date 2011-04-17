@@ -329,6 +329,7 @@ end
 
 function states.game.keypressed.escape()
 	state.current = 'mainmenu'
+	mainmenu.menu_type_index = 2
 	love.graphics.setFont(largefont)
 end
 

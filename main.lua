@@ -44,6 +44,8 @@ function love.load()
 	require "help"
 	require "conv"
 	require "mapview"
+
+	require "file"
 	
 	restart()
 end

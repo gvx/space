@@ -1,5 +1,7 @@
 require 'write'
 
+love.filesystem.mkdir 'saves'
+
 local modules = {map=map, graphics=graphics,
 	ui=ui, player=player, ai=ai, ships=ships,
 	physics=physics, mainmenu=mainmenu,
@@ -17,14 +19,14 @@ function savegame(filename)
 		end
 	end
 	-- now write buildsave to filename
-	f = love.filesystem.newFile(filename)
+	f = love.filesystem.newFile('saves/'..filename)
 	f:open'w'
 	f:write(write_table(buildsave))
 	f:close()
 end
 
 function loadgame(filename)
-	local ok, chunk = pcall(love.filesystem.load, filename)
+	local ok, chunk = pcall(love.filesystem.load, 'saves/'..filename)
 	if ok then
 		for key, mod in pairs(chunk()) do
 			for k, v in pairs(mod) do
