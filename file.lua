@@ -1,3 +1,5 @@
+require 'write'
+
 local modules = {map=map, graphics=graphics,
 	ui=ui, player=player, ai=ai, ships=ships,
 	physics=physics, mainmenu=mainmenu,
@@ -15,6 +17,10 @@ function savegame(filename)
 		end
 	end
 	-- now write buildsave to filename
+	f = love.filesystem.newFile(filename)
+	f:open'w'
+	f:write(write_table(buildsave))
+	f:close()
 end
 
 function loadgame(filename)
