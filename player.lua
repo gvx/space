@@ -15,6 +15,7 @@ function player.load()
 	player.rank = 1
 	player.ship = newship'beginner'
 	player.remove = false
+	player.fuel = 70
 end
 
 function player.update(dt)
@@ -78,6 +79,9 @@ function states.game.keypressed.m()
 	player.ship.cargo = {}
 end
 
+function states.game.keypressed.x()
+	player.ship.hull = player.ship.hull * .95
+end
 
 function states.game.keypressed.n()
 	player.ship.cargo = {'package', 'package', 'package', 'package', 'package', 'loot', 'altdollar', 'rock', 'pizza'}

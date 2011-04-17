@@ -41,7 +41,7 @@ function ships.load()
 end
 
 function newship(ship)
-	local s = {}
+	local s = {maxhull = ships[ship].hull}
 	for k,v in pairs(ships[ship]) do
 		s[k] = v
 	end

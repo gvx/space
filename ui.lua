@@ -120,7 +120,7 @@ local abs, cos, sqrt, atan2 = math.abs, math.cos, math.sqrt, math.atan2
 function ui.draw()
 	if ui.show then
 		love.graphics.setColor(0,0,0,90)
-		love.graphics.rectangle('fill', 36, 24, 300, 84-20)
+		love.graphics.rectangle('fill', 36, 24, 300, 64)
 		love.graphics.setColor(255,255,255,255)
 		love.graphics.print(("Speed: %02d km/s"):format(sqrt(player.dx^2 + player.dy^2)/5), 40, 28)
 		love.graphics.print("Rank: "..ranks[player.rank], 40, 48)
@@ -145,9 +145,16 @@ function ui.draw()
 			love.graphics.rectangle('fill', 400+30, 300-90, 35, 180)
 			love.graphics.setColor(255,255,255,255)
 		end
+		local hull_ratio = player.ship.hull / player.ship.maxhull
+		love.graphics.setColor(255*math.min(2-hull_ratio*2, 1),255*math.min(hull_ratio*2,1),0,hull_ratio < .1 and 255*abs(cos(state.frame*0.15)) or 255)
+		love.graphics.rectangle('line', 36.5, 112.5, 300, 20)
+		love.graphics.rectangle('fill', 37, 113, 300*hull_ratio-2, 18)
 		love.graphics.setColor(0,0,0,255)
 		love.graphics.print("Zoom", 736, 560)
-		love.graphics.setColor(255,255,255,255)
+		love.graphics.rectangle('fill', 35, 96, 302, 6)
+		love.graphics.setColor(255,255,255)
+		love.graphics.rectangle('line', 36.5, 97.5, 300, 4)
+		love.graphics.rectangle('fill', 37, 98, player.fuel*3, 3)
 		if ui.autopilot then
 			love.graphics.setColor(0,0,0,90)
 			love.graphics.rectangle('fill', 16, 578, 600, 20)
