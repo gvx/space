@@ -90,7 +90,7 @@ function states.game.keypressed.n()
 	player.ship.cargo = {'package', 'package', 'package', 'package', 'package', 'loot', 'altdollar', 'rock', 'pizza'}
 end
 
-local pfuncs = {load=true, update=true, draw=true}
+local pfuncs = {load=true, update=true, draw=true, allowsave=true}
 function player.allowsave(key)
 	return not pfuncs[key]
 end

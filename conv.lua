@@ -27,6 +27,6 @@ function states.conv.keypressed.enter()
 end
 
 local cfuncs = {load=true, update=true, draw=true, allowsave=true}
-function conv.allowsave()
+function conv.allowsave(key)
 	return not cfuncs[key]
 end
