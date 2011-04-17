@@ -65,7 +65,11 @@ function map.new()
 			table.insert(map.raster[X][Y], v)
 		end
 	end
-	setmetatable(map.raster, r_mt)
+	local function prepare_raster()
+		setmetatable(map.raster, r_mt)
+	end
+	hook.add('load_game', prepare_raster)
+	prepare_raster()
 end
 
 function map.update(dt)

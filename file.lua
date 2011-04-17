@@ -33,6 +33,8 @@ function loadgame(filename)
 				modules[key][k] = v
 			end
 		end
+
+		hook.call('load_game')
 	else
 		-- display a distressing message?
 	end

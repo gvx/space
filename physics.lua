@@ -8,7 +8,7 @@ local p = math.pi
 local sqrt, atan2, cos, sin, abs = math.sqrt, math.atan2, math.cos, math.sin, math.abs
 local floor = math.floor
 local mindist
-local mindistangle
+local mindistangle = 0
 function gravitate(ship, dt)
 	local X = floor(ship.x*.001)
 	local Y = floor(ship.y*.001)
