@@ -48,28 +48,31 @@ function map.new()
 		rock = {type='normal', name='Rocks', description='Just rocks. Heavy rocks.', weight=5},
 		pizza = {type='normal', name='Pizza', description='Mmm. Pizza.', weight=1},
 	}
-	map.raster = {}
 	local r = {}
 	local r_mt = {__index= function () return r end }
 	
-	for k,v in pairs(map.objects) do
-		if v.type == 'planet' or v.type == 'base' then
-			local X = math.floor(v.x*.001)
-			local Y = math.floor(v.y*.001)
-			if not map.raster[X] then
-				map.raster[X] = setmetatable({}, r_mt)
+	local function make_raster()
+		map.raster = {}
+
+		for k,v in pairs(map.objects) do
+			if v.type == 'planet' or v.type == 'base' then
+				local X = math.floor(v.x*.001)
+				local Y = math.floor(v.y*.001)
+				if not map.raster[X] then
+					map.raster[X] = setmetatable({}, r_mt)
+				end
+				if not rawget(map.raster[X], Y) then
+					map.raster[X][Y] = {}
+				end
+				table.insert(map.raster[X][Y], v)
 			end
-			if not rawget(map.raster[X], Y) then
-				map.raster[X][Y] = {}
-			end
-			table.insert(map.raster[X][Y], v)
 		end
-	end
-	local function prepare_raster()
+
 		setmetatable(map.raster, r_mt)
 	end
-	hook.add('load_game', prepare_raster)
-	prepare_raster()
+
+	hook.add('load_game', make_raster)
+	make_raster()
 end
 
 function map.update(dt)
@@ -78,7 +81,7 @@ end
 function map.draw()
 end
 
-local mfuncs = {load=true, new=true, update=true, draw=true, allowsave=true}
+local mfuncs = {load=true, new=true, update=true, draw=true, allowsave=true, raster=true}
 function map.allowsave(key)
 	return not mfuncs[key]
 end
